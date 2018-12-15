@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import Jumbotron from '../components/Jumbotron';
@@ -22,17 +23,47 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    const { container, topContainer, middleContainer, nameInput } = styles;
+
     return (
-      <View style={styles.container}>
-        <Jumbotron mainText={'Your Phone'} />
+      <View style={container}>
+        <View style={topContainer}>
+          <Jumbotron mainText='Your Phone'
+            subtext='Please confirm your country code and enter your phone number'
+          />
+        </View>
+        <View style={middleContainer}>
+         <TextInput
+          style={nameInput}
+          placeHolder="Your Phone Number"
+          // value={this.state.name}
+        />
+        </View>
       </View>
     );
   }
 }
-
+const offset = 24;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  topContainer: {
+  flex: 2,
+  justifyContent: 'center',
+  alignSelf: 'center',
+  },
+  middleContainer: {
+    flex: 3,
+    justifyContent: 'flex-start',
+    alignSelf: 'stretch',
+  },
+  nameInput: {
+    height: offset * 2,
+    // width: '100%',
+    margin: offset,
+    paddingHorizontal: offset,
+    borderWidth: 1,
   },
 });
