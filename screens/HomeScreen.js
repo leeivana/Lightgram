@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,8 +8,7 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
-import { MonoText } from '../components/StyledText';
+import Jumbotron from '../components/Jumbotron';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -26,7 +24,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Placement Text</Text>
+        <Jumbotron mainText={'Your Phone'} />
       </View>
     );
   }
