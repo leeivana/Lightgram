@@ -18,6 +18,7 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+
   _handlePress = () => {
     WebBrowser.openBrowserAsync(
       'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
@@ -35,7 +36,7 @@ export default class HomeScreen extends React.Component {
           />
         </View>
         <View style={middleContainer}>
-         <PhoneInput />
+         <PhoneInput/>
         </View>
       </KeyboardAvoidingView>
     );

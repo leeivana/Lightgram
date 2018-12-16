@@ -1,29 +1,42 @@
 import React, { Component }from 'react';
-import { TextInput, Text, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet, Animated, PanResponder } from 'react-native';
 
-const PhoneInput = () => {
-  const offset = 24;
-  const styles = StyleSheet.create({
-    phoneInput: {
-      height: offset * 2.5,
-      width: '100%',
-      margin: offset,
-      paddingHorizontal: offset,
-      borderTopWidth: 0.5,
-      borderBottomWidth: 0.3,
-    },
-  });
-  return (
-    <View>
-      <TextInput
-          keyboardType={'phone-pad'}
+const offset = 24;
+const styles = StyleSheet.create({
+  phoneInput: {
+    height: offset * 2.5,
+    margin: offset,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.3,
+    fontSize: 23,
+    textAlign: 'justify',
+  },
+});
+
+class PhoneInput extends Component {
+  constructor(props) {
+    super(props);
+    const panResponder = PanResponder.create({
+      // onStartShouldSetPanResponder
+    });
+    this.state = {
+      phoneNumber: '',
+    };
+  }
+
+  render() {
+    return (
+      <View>
+        <TextInput
+          keyboardType="phone-pad"
           style={styles.phoneInput}
           placeholder="Your Phone Number"
-          // value={this.state.name}
+          onChangeText={phoneNumber => this.setState({ phoneNumber })}
+          value={this.state.phoneNumber}
         />
-    </View>
-  );
-};
-
+      </View>
+    );
+  }
+}
 
 export default PhoneInput;
