@@ -78,7 +78,7 @@ export default class ContactsScreen extends React.Component {
               style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
             >
               <MonoText style={styles.codeHighlightText}>
-                screens/HomeScreen.js
+                screens/ContactsScreen.js
               </MonoText>
             </View>
 
