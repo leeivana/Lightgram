@@ -2,6 +2,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import ContactsScreen from './ContactsScreen';
 
 const styles = StyleSheet.create({
   buttonCircle: {
@@ -46,6 +47,17 @@ const slides = [
 ];
 
 export default class LandingScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      goToLogin: false,
+    };
+  }
+
+  _onDone = () => {
+    this.setState({ goToLogin: true });
+  };
+
   _renderNextButton = () => (
     <View style={styles.buttonCircle}>
       <Ionicons
@@ -68,13 +80,23 @@ export default class LandingScreen extends React.Component {
     </View>
   );
 
+  navigateToPage = () => {
+    console.log('skipped');
+    console.log(this.props.navigation.navigate('ContactsScreen'));
+  };
+
   render() {
+    if (this.state.goToLogin) {
+      return <ContactsScreen />;
+    }
     return (
       <AppIntroSlider
         slides={slides}
         renderDoneButton={this._renderDoneButton}
-        showSkipButton
         renderNextButton={this._renderNextButton}
+        showSkipButton
+        onDone={this._onDone}
+        onSkip={this._onDone}
       />
     );
   }

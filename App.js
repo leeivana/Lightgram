@@ -1,8 +1,10 @@
 import React from 'react';
+import { createStackNavigator } from 'react-navigation';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import LandingScreen from './screens/LandingScreen';
+import ContactsScreen from './screens/ContactsScreen';
 
 export default class App extends React.Component {
   state = {
@@ -53,6 +55,10 @@ export default class App extends React.Component {
     );
   }
 }
+const RootStack = createStackNavigator({
+  LandingScreen,
+  Contacts: ContactsScreen,
+});
 
 const styles = StyleSheet.create({
   container: {
