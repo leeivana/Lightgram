@@ -1,4 +1,5 @@
 import React from 'react';
+import { KeyboardAvoidingView, Keyboard } from 'react-native';
 import {
   Image,
   ScrollView,
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import Jumbotron from '../components/Jumbotron';
+import PhoneInput from '../components/PhoneInput';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -23,47 +25,38 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    const { container, topContainer, middleContainer, nameInput } = styles;
+    const { container, topContainer, middleContainer } = styles;
 
     return (
-      <View style={container}>
+      <KeyboardAvoidingView style={container} behavior="height" enabled>
         <View style={topContainer}>
           <Jumbotron mainText='Your Phone'
             subtext='Please confirm your country code and enter your phone number'
           />
         </View>
         <View style={middleContainer}>
-         <TextInput
-          style={nameInput}
-          placeHolder="Your Phone Number"
-          // value={this.state.name}
-        />
+         <PhoneInput />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
-const offset = 24;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
   topContainer: {
-  flex: 2,
-  justifyContent: 'center',
-  alignSelf: 'center',
+    paddingTop: 200,
+    paddingBottom: 0,
+    flex: 2,
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   middleContainer: {
     flex: 3,
     justifyContent: 'flex-start',
     alignSelf: 'stretch',
-  },
-  nameInput: {
-    height: offset * 2,
-    // width: '100%',
-    margin: offset,
-    paddingHorizontal: offset,
-    borderWidth: 1,
   },
 });

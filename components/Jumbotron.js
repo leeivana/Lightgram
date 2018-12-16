@@ -21,12 +21,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   subtextStyle: {
-    borderWidth: 1,
-    width: '60%',
+    width: '55%',
     marginTop: 16,
     fontSize: 20,
     justifyContent: 'center',
-    // alignItems: 'center',
     textAlign: 'center',
   },
 });
