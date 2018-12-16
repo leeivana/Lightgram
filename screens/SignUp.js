@@ -5,9 +5,6 @@ import { Auth } from 'aws-amplify';
 
 const initialState = {
   username: '',
-  password: '',
-  email: '',
-  phone_number: '',
   authenticationCode: '',
   showConfirmationForm: false,
 };
@@ -20,12 +17,12 @@ export default class SignUp extends React.Component {
   };
 
   signUp = async () => {
-    const { username, password, email, phone_number } = this.state;
+    const { username } = this.state;
     try {
       const success = await Auth.signUp({
         username,
-        password,
-        attributes: { email, phone_number },
+        password: username,
+        attributes: { phone_number: username },
       });
       console.log('user successfully signed up!: ', success);
       this.setState({ showConfirmationForm: true });
@@ -57,28 +54,6 @@ export default class SignUp extends React.Component {
               autoCapitalize="none"
               placeholderTextColor="white"
               onChangeText={val => this.onChangeText('username', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('password', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('email', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('phone_number', val)}
             />
             <Button title="Sign Up" onPress={this.signUp} />
           </Fragment>
@@ -114,6 +89,5 @@ const styles = StyleSheet.create({
     marginTop: 300,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
 });

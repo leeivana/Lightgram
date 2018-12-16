@@ -90,8 +90,8 @@ export default class LandingScreen extends React.Component {
     if (this.state.goToLogin) {
       return (
         <View>
-          <SignUp />
-          {/* <SignIn /> */}
+          {/* <SignUp /> */}
+          <SignIn />
         </View>
       );
     }

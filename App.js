@@ -2,30 +2,10 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
 import LandingScreen from './screens/LandingScreen';
 
-import config from './aws-exports';
-
-Amplify.configure({
-  Auth: {
-    // REQUIRED - Amazon Cognito Region
-    region: 'us-east-1',
-
-    // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolId: 'us-east-1_WnBQfXkue',
-
-    // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-    userPoolWebClientId: '2cckp103e8cubtqnt637vpesk7',
-
-    // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
-    mandatorySignIn: false,
-
-    // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'
-    authenticationFlowType: 'USER_PASSWORD_AUTH',
-  },
-});
-
-Amplify.configure(config);
+Amplify.configure(awsconfig);
 
 export default class App extends React.Component {
   state = {

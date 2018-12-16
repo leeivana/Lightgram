@@ -7,7 +7,6 @@ import { Auth } from 'aws-amplify';
 export default class SignIn extends React.Component {
   state = {
     username: '',
-    password: '',
     user: {},
     authenticationCode: '',
     showConfirmationForm: false,
@@ -18,9 +17,12 @@ export default class SignIn extends React.Component {
   };
 
   signIn = async () => {
-    const { username, password } = this.state;
+    const { username } = this.state;
     try {
-      const user = await Auth.signIn(username, password);
+      const user = await Auth.signIn({
+        username,
+        password: username,
+      });
       console.log('user successfully signed in!', user);
       this.setState({ user, showConfirmationForm: true });
     } catch (err) {
@@ -33,7 +35,6 @@ export default class SignIn extends React.Component {
     try {
       await Auth.confirmSignIn(user, authenticationCode);
       console.log('user successfully signed in!', user);
-      goHome();
     } catch (err) {
       console.log('error:', err);
     }
@@ -51,14 +52,6 @@ export default class SignIn extends React.Component {
               autoCorrect={false}
               placeholderTextColor="white"
               onChangeText={val => this.onChangeText('username', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              autoCapitalize="none"
-              secureTextEntry
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('password', val)}
             />
             <Button title="Sign In" onPress={this.signIn} />
           </Fragment>
@@ -94,6 +87,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    marginTop: 300,
     justifyContent: 'center',
     alignItems: 'center',
   },
