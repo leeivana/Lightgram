@@ -7,6 +7,8 @@ npm-debug.*
 
 # dependencies
 /node_modules
+/.idea
+.idea
 
 # misc
 .DS_Store
@@ -34,6 +36,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+
 
 # nyc test coverage
 .nyc_output
