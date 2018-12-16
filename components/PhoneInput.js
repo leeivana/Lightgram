@@ -1,5 +1,12 @@
 import React, { Component }from 'react';
-import { TextInput, View, StyleSheet, Animated, PanResponder } from 'react-native';
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  Animated,
+  PanResponder,
+  Keyboard,
+} from 'react-native';
 
 const offset = 24;
 const styles = StyleSheet.create({
@@ -16,15 +23,13 @@ const styles = StyleSheet.create({
 class PhoneInput extends Component {
   constructor(props) {
     super(props);
-    const panResponder = PanResponder.create({
-      // onStartShouldSetPanResponder
-    });
     this.state = {
       phoneNumber: '',
     };
   }
 
   render() {
+
     return (
       <View>
         <TextInput

@@ -1,13 +1,9 @@
 import React from 'react';
-import { KeyboardAvoidingView, Keyboard } from 'react-native';
 import {
-  Image,
-  ScrollView,
+  KeyboardAvoidingView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
-  TextInput,
+  ScrollView,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import Jumbotron from '../components/Jumbotron';
@@ -18,6 +14,10 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   _handlePress = () => {
     WebBrowser.openBrowserAsync(
@@ -29,16 +29,21 @@ export default class HomeScreen extends React.Component {
     const { container, topContainer, middleContainer } = styles;
 
     return (
-      <KeyboardAvoidingView style={container} behavior="height" enabled>
+      <ScrollView
+        style={container}
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={topContainer}>
-          <Jumbotron mainText='Your Phone'
+          <Jumbotron
+            mainText='Your Phone'
             subtext='Please confirm your country code and enter your phone number'
           />
         </View>
         <View style={middleContainer}>
-         <PhoneInput/>
+         <PhoneInput />
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }
