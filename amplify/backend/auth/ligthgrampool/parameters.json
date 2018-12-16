@@ -1,0 +1,54 @@
+{
+    "userPoolName": "ligthgramuserspool2",
+    "autoVerifiedAttributes": [
+        "phone_number"
+    ],
+    "mfaConfiguration": "ON",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "ligthgrampool_sns-role",
+    "roleExternalId": "ligthgrampool_role_external_id",
+    "policyName": "ligthgrampool-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": "6",
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "family_name",
+        "given_name",
+        "phone_number"
+    ],
+    "userpoolClientName": "ligthgrampool_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientReadAttributes": [
+        "family_name",
+        "given_name",
+        "phone_number",
+        "picture"
+    ],
+    "mfaLambdaRole": "ligthgrampool_totp_lambda_role",
+    "mfaLambdaLogPolicy": "ligthgrampool_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "ligthgrampool_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "ligthgrampool_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "ligthgrampool_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "ligthgrampool_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "ligthgrampool_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": true,
+    "useDefault": "manual",
+    "authSelections": "userPoolOnly",
+    "resourceName": "ligthgrampool",
+    "userpoolClientWriteAttributes": [
+        "family_name",
+        "given_name",
+        "phone_number"
+    ],
+    "unAuthRoleName": "ightgram-20181215205202-unauthRole",
+    "authRoleName": "ightgram-20181215205202-authRole",
+    "unAuthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181215205202-unauthRole",
+    "authRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181215205202-authRole"
+}

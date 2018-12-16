@@ -1,6 +1,5 @@
 import React from 'react';
 import { createSwitchNavigator } from 'react-navigation';
-import SkipNavigator from './SkipNavigator';
 import MainTabNavigator from './MainTabNavigator';
 
 export default createSwitchNavigator({
