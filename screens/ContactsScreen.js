@@ -12,7 +12,7 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-export default class HomeScreen extends React.Component {
+export default class ContactsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -78,7 +78,7 @@ export default class HomeScreen extends React.Component {
               style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
             >
               <MonoText style={styles.codeHighlightText}>
-                screens/HomeScreen.js
+                screens/ContactsScreen.js
               </MonoText>
             </View>
 
