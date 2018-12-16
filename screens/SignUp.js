@@ -1,4 +1,3 @@
-// SignUp.js
 import React, { Fragment } from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
 
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   container: {
+    marginTop: 300,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
