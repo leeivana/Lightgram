@@ -29,6 +29,12 @@ class PhoneInput extends Component {
   }
 
   render() {
+    //test phone number before submission
+    const isValid = phoneNum => {
+      console.log(
+        /(^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$)/.test(phoneNum)
+      );
+    };
 
     return (
       <View>
@@ -38,6 +44,7 @@ class PhoneInput extends Component {
           placeholder="Your Phone Number"
           onChangeText={phoneNumber => this.setState({ phoneNumber })}
           value={this.state.phoneNumber}
+          maxLength={13}
         />
       </View>
     );
