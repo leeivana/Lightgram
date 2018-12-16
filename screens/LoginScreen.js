@@ -7,11 +7,25 @@ import PhoneInput from '../components/PhoneInput';
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     headerStyle: { borderBottomWidth: 0 },
-    headerRight: <Button title="Next" onPress={(navigation)=>{ navigation.navigate('DrawerOpen'); }} />,
-    headerLeft: <Button title="Back" onPress={(navigation)=>{ navigation.navigate('DrawerOpen'); }} />,
+    headerRight: (
+      <Button
+        title="Next"
+        onPress={navigation => {
+          navigation.navigate('DrawerOpen');
+        }}
+      />
+    ),
+    headerLeft: (
+      <Button
+        title="Back"
+        onPress={navigation => {
+          navigation.navigate('DrawerOpen');
+        }}
+      />
+    ),
   });
 
-  //call setstate for phone number
+  // call setstate for phone number
   constructor(props) {
     super(props);
     this.state = {
@@ -36,8 +50,8 @@ export default class HomeScreen extends React.Component {
       >
         <View style={topContainer}>
           <Jumbotron
-            mainText='Your Phone'
-            subtext='Please confirm your country code and enter your phone number'
+            mainText="Your Phone"
+            subtext="Please confirm your country code and enter your phone number"
           />
         </View>
         <View style={middleContainer}>

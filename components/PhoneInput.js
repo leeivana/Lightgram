@@ -1,12 +1,5 @@
-import React, { Component }from 'react';
-import {
-  TextInput,
-  View,
-  StyleSheet,
-  Animated,
-  PanResponder,
-  Keyboard,
-} from 'react-native';
+import React, { Component } from 'react';
+import { TextInput, View, StyleSheet } from 'react-native';
 
 const offset = 24;
 const styles = StyleSheet.create({
@@ -29,7 +22,7 @@ class PhoneInput extends Component {
   }
 
   render() {
-    //test phone number before submission
+    // test phone number before submission
     const isValid = phoneNum => {
       console.log(
         /(^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$)/.test(phoneNum)

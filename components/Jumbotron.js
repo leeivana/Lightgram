@@ -1,14 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Jumbotron = (props) => {
-  return (
-    <View style={styles.viewStyle}>
-      <Text style={styles.mainTextStyle}>{props.mainText}</Text>
-      <Text style={styles.subtextStyle}>{props.subtext}</Text>
-    </View>
-  );
-};
+const Jumbotron = props => (
+  <View style={styles.viewStyle}>
+    <Text style={styles.mainTextStyle}>{props.mainText}</Text>
+    <Text style={styles.subtextStyle}>{props.subtext}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   mainTextStyle: {
