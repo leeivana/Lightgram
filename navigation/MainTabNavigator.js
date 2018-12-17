@@ -7,45 +7,36 @@ import {
 
 import TabBarIcon from '../components/TabBarIcon';
 import ContactsScreen from '../screens/ContactsScreen';
-import ChatsScreen from '../screens/ChatsScreen';
+import ChatsListScreen from '../screens/ChatListScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
-const HomeStack = createStackNavigator({
-  Home: ContactsScreen,
+const ContactsStack = createStackNavigator({
+  Contacts: ContactsScreen,
 });
-
-HomeStack.navigationOptions = {
+ContactsStack.navigationOptions = {
   tabBarLabel: 'Contacts',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name={Platform.OS === 'ios' ? 'ios-contacts' : 'md-contacts'}
     />
   ),
 };
-
-const LinksStack = createStackNavigator({
-  Links: ChatsScreen,
+const ChatsListStack = createStackNavigator({
+  Chats: ChatsListScreen,
 });
-
-LinksStack.navigationOptions = {
+ChatsListStack.navigationOptions = {
   tabBarLabel: 'Chats',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-chatbubbles' : 'md-chatbubbles'}
     />
   ),
 };
-
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
-
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
@@ -55,9 +46,8 @@ SettingsStack.navigationOptions = {
     />
   ),
 };
-
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
+  ContactsStack,
+  ChatsListStack,
   SettingsStack,
 });
