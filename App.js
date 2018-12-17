@@ -4,6 +4,7 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import LandingScreen from './screens/LandingScreen';
+import AppNavigator from './navigation/AppNavigator';
 
 Amplify.configure(awsconfig);
 
@@ -51,7 +52,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <LandingScreen />
+        <AppNavigator />
       </View>
     );
   }
