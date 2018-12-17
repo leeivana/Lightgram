@@ -155,7 +155,7 @@ export default class SignUp extends React.Component {
                   this.phone = ref;
                 }}
                 style={phoneInput}
-                textStyle={{ fontSize: 20 }}
+                textStyle={{ fontSize: 21 }}
                 flagStyle={{ height: 25, width: 45 }}
                 value={username}
                 placeholder="Your Phone Number"
