@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
-import { View, Button, TextInput, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { View, Button, TextInput, StyleSheet } from 'react-native';
 import { Auth } from 'aws-amplify';
+import PhoneInput from 'react-native-phone-input';
 import Jumbotron from '../components/Jumbotron';
 
 const initialState = {
@@ -10,10 +11,9 @@ const initialState = {
 };
 
 export default class SignUp extends React.Component {
-  //need to call rendernavigation
-  static navigationOptions = ({ navigation, screenProps }) => ({
-    title: 'SignUp',
-    headerStyle: { borderBottomWidth: 0, color: black },
+  // need to call rendernavigation
+  static navigationOptions = () => ({
+    title: null,
     headerRight: (
       <Button
         title="Next"
@@ -31,9 +31,6 @@ export default class SignUp extends React.Component {
       />
     ),
   });
-  static navigationOptions = {
-    title: 'Home',
-  };
 
   state = initialState;
 
@@ -43,6 +40,7 @@ export default class SignUp extends React.Component {
 
   signUp = async () => {
     const { username } = this.state;
+    console.log(username);
     try {
       const success = await Auth.signUp({
         username,
@@ -77,17 +75,21 @@ export default class SignUp extends React.Component {
           <View>
             <View style={topContainer}>
               <Jumbotron
-              mainText="Your Phone"
-              subtext="Please confirm your country code and enter your phone number"
+                mainText="Your Phone"
+                subtext="Please confirm your country code and enter your phone number"
               />
             </View>
             <View style={middleContainer}>
-              <TextInput
-                value={this.state.username}
-                keyboardType="phone-pad"
+              <PhoneInput
                 style={phoneInput}
+                textStyle={{ fontSize: 30 }}
+                flagStyle={{ height: 30, width: 50 }}
+                value={this.state.username}
                 placeholder="Your Phone Number"
-                onChangeText={val => this.onChangeText('username', val)}
+                onChangePhoneNumber={val => {
+                  this.onChangeText('username', val);
+                }}
+                keyboardType="phone-pad"
               />
               <Button title="Sign Up" onPress={this.signUp} />
             </View>
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   middleContainer: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignSelf: 'stretch',
   },
   phoneInput: {
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     margin: offset,
     borderTopWidth: 0.5,
     borderBottomWidth: 0.3,
-    fontSize: 23,
+    fontSize: 30,
     textAlign: 'justify',
   },
 });
