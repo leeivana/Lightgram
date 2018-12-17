@@ -10,29 +10,30 @@ const initialState = {
 };
 
 export default class SignUp extends React.Component {
-  // static navigationOptions = ({ navigation, screenProps }) => ({
-  //   title: 'SignUp',
-  //   headerStyle: { borderBottomWidth: 0, color: black },
-  //   headerRight: (
-  //     <Button
-  //       title="Next"
-  //       onPress={navigation => {
-  //         navigation.navigate('DrawerOpen');
-  //       }}
-  //     />
-  //   ),
-  //   headerLeft: (
-  //     <Button
-  //       title="Back"
-  //       onPress={navigation => {
-  //         navigation.navigate('DrawerOpen');
-  //       }}
-  //     />
-  //   ),
-  // });
-  // static navigationOptions = {
-  //   title: 'Home',
-  // };
+  //need to call rendernavigation
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'SignUp',
+    headerStyle: { borderBottomWidth: 0, color: black },
+    headerRight: (
+      <Button
+        title="Next"
+        onPress={navigation => {
+          navigation.navigate('DrawerOpen');
+        }}
+      />
+    ),
+    headerLeft: (
+      <Button
+        title="Back"
+        onPress={navigation => {
+          navigation.navigate('DrawerOpen');
+        }}
+      />
+    ),
+  });
+  static navigationOptions = {
+    title: 'Home',
+  };
 
   state = initialState;
 
