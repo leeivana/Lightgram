@@ -3,7 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import SignUp from './SignUp';
-import SignIn from './SignIn';
 
 const styles = StyleSheet.create({
   buttonCircle: {
@@ -91,7 +90,6 @@ export default class LandingScreen extends React.Component {
       return (
         <View>
           <SignUp />
-          {/* <SignIn /> */}
         </View>
       );
     }
