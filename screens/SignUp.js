@@ -2,9 +2,7 @@ import React from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
 import { Auth } from 'aws-amplify';
 import PhoneInput from 'react-native-phone-input';
-import CountryPicker, {
-  getAllCountries,
-} from 'react-native-country-picker-modal';
+import CountryPicker from 'react-native-country-picker-modal';
 import Jumbotron from '../components/Jumbotron';
 
 const initialState = {
@@ -166,7 +164,7 @@ export default class SignUp extends React.Component {
                   this.onChangeText('authenticationCode', val)
                 }
               />
-              <Button title="Confirm Sign Up" onPress={this.confirmSignUp} />
+              <Button title="Confirm" onPress={this.confirmSignUp} />
             </View>
           </View>
         )}
