@@ -5,6 +5,7 @@ import { Auth } from 'aws-amplify';
 
 const initialState = {
   username: '',
+  user: {},
   authenticationCode: '',
   showConfirmationForm: false,
 };
@@ -14,6 +15,31 @@ export default class SignUp extends React.Component {
 
   onChangeText = (key, val) => {
     this.setState({ [key]: val });
+  };
+
+  signIn = async () => {
+    const { username } = this.state;
+    try {
+      const user = await Auth.signIn({
+        username,
+        password: username,
+      });
+      console.log('user successfully signed in!', user);
+      this.setState({ user, showConfirmationForm: true });
+    } catch (err) {
+      console.log('error:', err);
+    }
+  };
+
+  confirmSignIn = async () => {
+    const { user, authenticationCode } = this.state;
+    try {
+      await Auth.confirmSignIn(user, authenticationCode);
+      console.log('successfully sign in!');
+      alert('User signed in successfully!');
+    } catch (err) {
+      console.log('error:', err);
+    }
   };
 
   signUp = async () => {
@@ -27,6 +53,9 @@ export default class SignUp extends React.Component {
       console.log('user successfully signed up!: ', success);
       this.setState({ showConfirmationForm: true });
     } catch (err) {
+      if (err.code === 'UsernameExistsException') {
+        this.signIn();
+      }
       console.log('error signing up: ', err);
     }
   };
@@ -39,6 +68,9 @@ export default class SignUp extends React.Component {
       alert('User signed up successfully!');
       this.setState({ ...initialState });
     } catch (err) {
+      if (err.code === 'NotAuthorizedException') {
+        this.confirmSignIn();
+      }
       console.log('error confirming signing up: ', err);
     }
   };
@@ -50,7 +82,7 @@ export default class SignUp extends React.Component {
           <Fragment>
             <TextInput
               style={styles.input}
-              placeholder="Username"
+              placeholder="Phone Number"
               autoCapitalize="none"
               placeholderTextColor="white"
               onChangeText={val => this.onChangeText('username', val)}
