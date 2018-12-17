@@ -155,7 +155,7 @@ export default class SignUp extends React.Component {
                   this.phone = ref;
                 }}
                 style={phoneInput}
-                textStyle={{ fontSize: 30 }}
+                textStyle={{ fontSize: 20 }}
                 flagStyle={{ height: 25, width: 45 }}
                 value={username}
                 placeholder="Your Phone Number"
@@ -164,6 +164,7 @@ export default class SignUp extends React.Component {
                 }}
                 keyboardType="phone-pad"
                 onPressFlag={this.onPressFlag}
+                offset={20}
               />
               <CountryPicker
                 ref={ref => {
