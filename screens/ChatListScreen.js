@@ -42,6 +42,20 @@ export default class ChatsListScreen extends React.Component {
       <View style={container}>
         <ScrollView>
           <Chats
+            first_name="Serhii"
+            last_name="Panchyshyn"
+            time=""
+            content="JavaScript for life!"
+            src=""
+          />
+          <Chats
+            first_name="Tony"
+            last_name="Lachmaniucu"
+            time=""
+            content="I am gonna make best AI ever"
+            src=""
+          />
+          <Chats
             first_name="Joe"
             last_name="Pham"
             time=""
