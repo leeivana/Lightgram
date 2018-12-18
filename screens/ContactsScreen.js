@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Image,
+  Button,
   Platform,
   ScrollView,
   StyleSheet,
@@ -12,10 +12,18 @@ import {
 import { WebBrowser, Permissions, Contacts } from 'expo';
 import ContactList from '../components/ContactList';
 
-export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+export default class ContactsScreen extends React.Component {
+  static navigationOptions = () => ({
+    title: 'Contacts',
+    headerRight: (
+      <Button
+        title="Compose"
+        onPress={() => {
+          console.log('yes');
+        }}
+      />
+    ),
+  });
 
   state = {
     status: null,

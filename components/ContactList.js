@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, FlatList } from 'react-native';
 
 import { List, Text } from 'native-base';
 
