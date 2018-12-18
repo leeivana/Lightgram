@@ -18,11 +18,16 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <AppNavigator />
 =======
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <ChatScreen />
 >>>>>>> feature/chatscreen
+=======
+        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        <ChatScreen />
+>>>>>>> a68087c844a42689f387e42a16de0734086ecdb2
       </View>
     );
   }
