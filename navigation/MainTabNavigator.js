@@ -9,6 +9,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import ContactsScreen from '../screens/ContactsScreen';
 import ChatsListScreen from '../screens/ChatListScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 const ContactsStack = createStackNavigator({
   Contacts: ContactsScreen,
@@ -46,6 +47,7 @@ SettingsStack.navigationOptions = {
     />
   ),
 };
+
 export default createBottomTabNavigator({
   ContactsStack,
   ChatsListStack,

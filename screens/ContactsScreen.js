@@ -48,7 +48,7 @@ export default class ContactsScreen extends React.Component {
       });
       // }
       // console.log(this.state.contacts);
-      console.log(contacts);
+      // console.log(contacts);
     } else {
       alert(
         'You need to enable Contacts permission. Settings > Lightgram > Contacts'
