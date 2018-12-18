@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     margin: offset,
     borderTopWidth: 0.5,
     borderBottomWidth: 0.3,
-    fontSize: 30,
+    fontSize: 20,
     textAlign: 'justify',
   },
 });
@@ -154,8 +154,8 @@ export default class SignUp extends React.Component {
                 ref={ref => {
                   this.phone = ref;
                 }}
+                offset={15}
                 style={phoneInput}
-                textStyle={{ fontSize: 21 }}
                 flagStyle={{ height: 25, width: 45 }}
                 value={username}
                 placeholder="Your Phone Number"
@@ -164,7 +164,6 @@ export default class SignUp extends React.Component {
                 }}
                 keyboardType="phone-pad"
                 onPressFlag={this.onPressFlag}
-                offset={20}
               />
               <CountryPicker
                 ref={ref => {
