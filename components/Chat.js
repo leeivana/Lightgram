@@ -16,7 +16,6 @@ const Chats = ({ first_name, last_name, time, content, src, navigation }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        // console.log(first_name);
         navigation.navigate('Chat');
       }}
     >
