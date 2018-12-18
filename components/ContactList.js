@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, FlatList } from 'react-native';
-
+import { View, TouchableOpacity, Image, Platform } from 'react-native';
 import { List, Text } from 'native-base';
+import { Icon } from 'expo';
 
 const ContactList = props => {
   const list = ({ allContacts }) => {
@@ -17,12 +17,21 @@ const ContactList = props => {
               borderColor: '#f7f7f7',
             }}
           >
-            <Image
-              // source={require('../assets/images/robot-dev.png')}
-              source={item.image}
-              style={styles.imageStyle}
-              resizeMode="contain"
-            />
+            <View>
+              {item.imageAvailable ? (
+                <Image
+                  style={styles.imageStyle}
+                  resizeMode="contain"
+                  source={item.image}
+                />
+              ) : (
+                <Icon.Ionicons
+                  name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
+                  size={75}
+                />
+              )}
+            </View>
+
             <View>
               <View
                 style={{
