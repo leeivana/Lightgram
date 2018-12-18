@@ -2,7 +2,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import SignUp from './SignUp';
+import LoginScreen from './LoginScreen';
 
 const styles = StyleSheet.create({
   buttonCircle: {
@@ -47,12 +47,9 @@ const slides = [
 ];
 
 export default class LandingScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      goToLogin: false,
-    };
-  }
+  state = {
+    goToLogin: false,
+  };
 
   _onDone = () => {
     this.setState({ goToLogin: true });
@@ -80,16 +77,11 @@ export default class LandingScreen extends React.Component {
     </View>
   );
 
-  navigateToPage = () => {
-    console.log('skipped');
-    console.log(this.props.navigation.navigate('ContactsScreen'));
-  };
-
   render() {
     if (this.state.goToLogin) {
       return (
         <View>
-          <SignUp />
+          <LoginScreen />
         </View>
       );
     }

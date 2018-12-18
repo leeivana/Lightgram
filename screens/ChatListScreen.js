@@ -6,8 +6,22 @@ import Chats from '../components/Chat';
 export default class ChatsListScreen extends React.Component {
   static navigationOptions = () => ({
     title: 'Chats',
-    headerRight: <Button title="Compose" onPress={null} />,
-    headerLeft: <Button title="Edit" onPress={null} />,
+    headerRight: (
+      <Button
+        title="Compose"
+        onPress={() => {
+          console.log('yes');
+        }}
+      />
+    ),
+    headerLeft: (
+      <Button
+        title="Edit"
+        onPress={() => {
+          console.log('yes');
+        }}
+      />
+    ),
   });
 
   state = {
@@ -27,6 +41,20 @@ export default class ChatsListScreen extends React.Component {
     return (
       <View style={container}>
         <ScrollView>
+          <Chats
+            first_name="Serhii"
+            last_name="Panchyshyn"
+            time=""
+            content="JavaScript for life!"
+            src=""
+          />
+          <Chats
+            first_name="Tony"
+            last_name="Lachmaniucu"
+            time=""
+            content="I am gonna make best AI ever"
+            src=""
+          />
           <Chats
             first_name="Joe"
             last_name="Pham"
