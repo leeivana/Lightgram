@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
-export default function Chats({ first_name, last_name, time, content, src }) {
+const Chats = ({ first_name, last_name, time, content, src, navigation }) => {
   const {
     container,
     imageStyle,
@@ -13,7 +14,12 @@ export default function Chats({ first_name, last_name, time, content, src }) {
     msgWrapper,
   } = styles;
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        // console.log(first_name);
+        navigation.navigate('Chat');
+      }}
+    >
       <View style={container}>
         <Image source={{ src }} style={imageStyle} resizeMode="contain" />
         <View>
@@ -36,7 +42,7 @@ export default function Chats({ first_name, last_name, time, content, src }) {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -74,3 +80,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export default withNavigation(Chats);
