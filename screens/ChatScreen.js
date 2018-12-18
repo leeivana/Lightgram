@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import {
   GiftedChat,
   Actions,
@@ -9,7 +9,15 @@ import {
 
 class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: (navigation.state.params || {}).name || 'Chat',
+    title: (navigation.state.params || {}).first_name || 'Chat',
+    headerLeft: (
+      <Button
+        title="Back"
+        onPress={() => {
+          navigation.navigate.goBack();
+        }}
+      />
+    ),
   });
 
   state = {

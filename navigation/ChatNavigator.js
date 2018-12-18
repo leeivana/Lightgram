@@ -9,15 +9,6 @@ import {
 import ChatListScreen from '../screens/ChatListScreen';
 import ChatScreen from '../screens/ChatScreen';
 
-const ChatNavigator = TabNavigator({
-  ChatList: {
-    screen: ChatListScreen,
-  },
-  Chat: {
-    screen: ChatScreen,
-  },
-});
-
 const ChatScreenStack = createStackNavigator({
   Chats: ChatScreen,
 });
