@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Container, Header, Content, Button, Text } from 'native-base';
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -9,7 +10,9 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View>
-        <Text>Settings</Text>
+        <Button>
+          <Text>Log Out</Text>
+        </Button>
       </View>
     );
   }
