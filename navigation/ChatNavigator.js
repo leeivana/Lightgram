@@ -6,11 +6,11 @@ import {
   TabNavigator,
 } from 'react-navigation';
 
-import ChatListScreen from '../screens/ChatListScreen';
 import ChatScreen from '../screens/ChatScreen';
+import ChatsListScreen from '../screens/ChatListScreen';
 
 const ChatScreenStack = createStackNavigator({
-  Chats: ChatScreen,
+  Chat: ChatScreen,
 });
 ChatScreenStack.navigationOptions = {
   tabBarLabel: 'Chat',

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import {
   GiftedChat,
   Actions,
@@ -14,7 +15,8 @@ class ChatScreen extends Component {
       <Button
         title="Back"
         onPress={() => {
-          navigation.navigate.goBack();
+          // doesn't work
+          navigation.navigate('Chats');
         }}
       />
     ),
@@ -60,4 +62,4 @@ class ChatScreen extends Component {
   }
 }
 
-export default ChatScreen;
+export default withNavigation(ChatScreen);
