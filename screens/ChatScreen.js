@@ -15,7 +15,6 @@ class ChatScreen extends Component {
       <Button
         title="Back"
         onPress={() => {
-          // doesn't work
           navigation.navigate('Chats');
         }}
       />
