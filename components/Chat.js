@@ -35,7 +35,9 @@ const Chats = ({ first_name, last_name, time, content, src, navigation }) => {
               color="#7dd5df"
               style={{ marginLeft: 15, marginRight: 5 }}
             /> */}
-            <Text style={msgContent}>{content}</Text>
+            <Text numberOfLines={1} style={msgContent}>
+              {content}
+            </Text>
           </View>
         </View>
       </View>
@@ -77,6 +79,7 @@ const styles = StyleSheet.create({
   msgWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: 300,
   },
 });
 

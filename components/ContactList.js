@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Platform } from 'react-native';
 import { List, Text } from 'native-base';
 import { Icon } from 'expo';
+import { withNavigation } from 'react-navigation';
 
 const ContactList = props => {
   const list = ({ allContacts }) => {
     if (allContacts) {
       return allContacts.map(item => (
-        <TouchableOpacity key={item.id}>
+        <TouchableOpacity
+          key={item.id}
+          onPress={() => {
+            props.navigation.navigate('Chat');
+          }}
+        >
           <View
             style={{
               alignItems: 'center',
@@ -68,4 +74,4 @@ const styles = {
   },
 };
 
-export default ContactList;
+export default withNavigation(ContactList);

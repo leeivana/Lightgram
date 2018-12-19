@@ -1,11 +1,8 @@
 import React from 'react';
 import {
   Button,
-  Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
   Linking,
 } from 'react-native';
@@ -40,15 +37,11 @@ export default class ContactsScreen extends React.Component {
       const contacts = await Contacts.getContactsAsync({
         fields: [Contacts.Fields.PhoneNumbers, Contacts.Fields.Image],
       });
-      // if (this.state.contacts.phoneNumbers[0].number) {
 
       this.setState({
         status,
         contacts: contacts.data,
       });
-      // }
-      // console.log(this.state.contacts);
-      // console.log(contacts);
     } else {
       alert(
         'You need to enable Contacts permission. Settings > Lightgram > Contacts'

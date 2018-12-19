@@ -11,6 +11,7 @@ const initialState = {
   authenticationCode: '',
   showConfirmationForm: false,
   cca2: 'US',
+  loggedIn: false,
 };
 
 const offset = 24;
@@ -31,9 +32,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'justify',
   },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
 });
 
-export default class SignUp extends React.Component {
+class Login extends React.Component {
   state = initialState;
 
   componentDidMount() {
@@ -69,14 +74,14 @@ export default class SignUp extends React.Component {
     try {
       await Auth.confirmSignIn(user, authenticationCode);
       console.log('successfully sign in!');
-      alert('User signed in successfully!');
+      this.props.setUser(user);
     } catch (err) {
       console.log('error:', err);
     }
   };
 
   signUp = async () => {
-    const { username } = this.state;
+    const { user, username } = this.state;
     console.log(username);
     try {
       const success = await Auth.signUp({
@@ -85,7 +90,7 @@ export default class SignUp extends React.Component {
         attributes: { phone_number: username },
       });
       console.log('user successfully signed up!: ', success);
-      this.setState({ showConfirmationForm: true });
+      this.setState({ user: success, showConfirmationForm: true });
     } catch (err) {
       if (err.code === 'UsernameExistsException') {
         this.signIn();
@@ -95,12 +100,13 @@ export default class SignUp extends React.Component {
   };
 
   confirmSignUp = async () => {
-    const { username, authenticationCode } = this.state;
+    const { user, username, authenticationCode } = this.state;
     try {
       await Auth.confirmSignUp(username, authenticationCode);
       console.log('successfully signed up!');
       alert('User signed up successfully!');
       this.setState({ ...initialState });
+      this.props.setUser(user);
     } catch (err) {
       if (err.code === 'NotAuthorizedException') {
         this.confirmSignIn();
@@ -183,3 +189,4 @@ export default class SignUp extends React.Component {
     );
   }
 }
+export default Login;
