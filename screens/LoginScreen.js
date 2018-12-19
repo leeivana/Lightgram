@@ -3,10 +3,7 @@ import { View, Button, TextInput, StyleSheet } from 'react-native';
 import { Auth } from 'aws-amplify';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
-import { withNavigation } from 'react-navigation';
-import { Actions } from 'react-native-router-flux';
 import Jumbotron from '../components/Jumbotron';
-import AppNavigator from '../navigation/AppNavigator';
 
 const initialState = {
   user: {},
@@ -127,15 +124,6 @@ class Login extends React.Component {
   render() {
     const { topContainer, middleContainer, phoneInput } = styles;
     const { showConfirmationForm, username, cca2 } = this.state;
-    if (this.state.loggedIn) {
-      this.props;
-      // return (
-      //   <View style={styles.container}>
-      //     {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-      //     <AppNavigator />
-      //   </View>
-      // );
-    }
     return (
       <View>
         {!showConfirmationForm && (
