@@ -4,21 +4,27 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import LandingScreen from './screens/LandingScreen';
-import ChatScreen from './screens/ChatScreen';
+import LoginScreen from './screens/LoginScreen';
 import AppNavigator from './navigation/AppNavigator';
 
 Amplify.configure(awsconfig);
 
 export default class App extends React.Component {
   state = {
-    isLoadingComplete: false,
+    user: null,
   };
 
   render() {
+    const { user } = this.state;
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+        {/* <LandingScreen /> */}
+        {user ? (
+          <AppNavigator />
+        ) : (
+          <LoginScreen setUser={u => this.setState({ user: u })} />
+        )}
       </View>
     );
   }
