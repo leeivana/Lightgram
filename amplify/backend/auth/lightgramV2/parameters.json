@@ -1,0 +1,54 @@
+{
+    "identityPoolName": "identitylightgramV2",
+    "allowUnauthenticatedIdentities": false,
+    "thirdPartyAuth": false,
+    "lambdaLogPolicy": "lightgramV2_lambda_log_policy",
+    "openIdLambdaRoleName": "lightgramV2_openid_lambda_role",
+    "openIdRolePolicy": "lightgramV2_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "lightgramV2_openid_lambda_iam_policy",
+    "openIdLogPolicy": "lightgramV2_openid_lambda_log_policy",
+    "userPoolName": "userpoollightgramV2",
+    "autoVerifiedAttributes": [
+        "phone_number"
+    ],
+    "mfaConfiguration": "ON",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "lightgramV2_sns-role",
+    "roleExternalId": "lightgramV2_role_external_id",
+    "policyName": "lightgramV2-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": "6",
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "family_name",
+        "given_name",
+        "phone_number"
+    ],
+    "userpoolClientName": "lightgramV2_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "lightgramV2_totp_lambda_role",
+    "mfaLambdaLogPolicy": "lightgramV2_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "lightgramV2_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "lightgramV2_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "lightgramV2_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "lightgramV2_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "lightgramV2_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "useDefault": "manual",
+    "authSelections": "identityPoolAndUserPool",
+    "resourceName": "lightgramV2",
+    "unAuthRoleName": "ightgram-20181220163157-unauthRole",
+    "authRoleName": "ightgram-20181220163157-authRole",
+    "unAuthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181220163157-unauthRole",
+    "authRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181220163157-authRole"
+}

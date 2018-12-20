@@ -1,14 +1,57 @@
 {
-    "providers": {
-        "awscloudformation": {
-            "AuthRoleName": "ightgram-20181216142840-authRole",
-            "UnauthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181216142840-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181216142840-authRole",
-            "Region": "us-east-1",
-            "DeploymentBucketName": "ightgram-20181216142840-deployment",
-            "UnauthRoleName": "ightgram-20181216142840-unauthRole",
-            "StackName": "ightgram-20181216142840",
-            "StackId": "arn:aws:cloudformation:us-east-1:448123779919:stack/ightgram-20181216142840/cb05c3d0-0168-11e9-8a4e-0e16aabfe77c"
-        }
-    }
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "ightgram-20181220163157-authRole",
+			"UnauthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181220163157-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181220163157-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "ightgram-20181220163157-deployment",
+			"UnauthRoleName": "ightgram-20181220163157-unauthRole",
+			"StackName": "ightgram-20181220163157",
+			"StackId": "arn:aws:cloudformation:us-east-1:448123779919:stack/ightgram-20181220163157/ad760e90-049e-11e9-849d-12094f064940"
+		}
+	},
+	"auth": {
+		"lightgramV2": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/ightgram-20181220163157-deployment/amplify-cfn-templates/auth/lightgramV2-cloudformation-template.yml",
+				"logicalId": "authlightgramV2"
+			},
+			"lastPushTimeStamp": "2018-12-20T21:43:14.364Z",
+			"output": {
+				"CreatedSNSRole": "arn:aws:iam::448123779919:role/lightgramV2_sns-role",
+				"AppClientSecret": "v3ovu2pic28p22a0dm0km5i16r8e2u7804r6apafks5rjkpt32n",
+				"UserPoolId": "us-east-1_vS8AwLfUc",
+				"AppClientIDWeb": "5ej48iusb6c725bquo54lpn93o",
+				"AppClientID": "15cru8vtimtlurefjv0cij3q4b",
+				"IdentityPoolId": "us-east-1:306f9ad5-c39c-41dc-a097-8fb56ec0fc91",
+				"IdentityPoolName": "identitylightgramV2",
+				"UserPoolName": "userpoollightgramV2"
+			},
+			"lastPushDirHash": "wBFie/PGHhcXiz18U0CwSQFwdTI="
+		}
+	},
+	"api": {
+		"lightgram": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"securityType": "AMAZON_COGNITO_USER_POOLS",
+				"GraphQLAPIIdOutput": "2e6ozoxg3rdmjpojfwjpa3blci",
+				"GraphQLAPIEndpointOutput": "https://z5iqzymw2fehdgqjdgojs2kdma.appsync-api.us-east-1.amazonaws.com/graphql",
+				"GraphQLAPIKeyOutput": "da2-wr6ftygaprewjh2aa5yyr7pexq",
+				"AuthCognitoUserPoolIdOutput": "us-east-1_vS8AwLfUc",
+				"AuthCognitoUserPoolNativeClientId": "See UserPool: us-east-1_vS8AwLfUc",
+				"AuthCognitoUserPoolJSClientId": "See UserPool: us-east-1_vS8AwLfUc"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/ightgram-20181220163157-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apilightgram"
+			},
+			"lastPushTimeStamp": "2018-12-20T21:43:14.364Z",
+			"lastPushDirHash": "vAL/6O+9eJU2jO6GJ2uk6X9Ft4k="
+		}
+	}
 }
