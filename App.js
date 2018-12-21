@@ -1,163 +1,81 @@
-import React, { Fragment } from 'react';
-import {
-  Platform,
-  Text,
-  StatusBar,
-  StyleSheet,
-  View,
-  Button,
-  TextInput,
-} from 'react-native';
-// import { AppLoading, Asset, Font, Icon } from 'expo';
+import React from 'react';
 import Amplify, { Auth } from 'aws-amplify';
+import { View, Text, StyleSheet } from 'react-native';
+
 import {
-  Authenticator,
-  SignIn,
-  SignUp,
+  ConfirmSignIn,
   ConfirmSignUp,
-  Greetings,
+  ForgotPassword,
+  RequireNewPassword,
+  SignIn,
+  VerifyContact,
+  withAuthenticator,
+  Authenticator,
 } from 'aws-amplify-react-native';
 
+import SignUpScreen from './screens/SignUpScreen';
+
 import awsconfig from './aws-exports';
-// import LandingScreen from './screens/LandingScreen';
-import LoginScreen from './screens/LoginScreen';
-// import AppNavigator from './navigation/AppNavigator';
 
 Amplify.configure(awsconfig);
 
-const initialState = {
-  firstname: '',
-  lastname: '',
-  password: '',
-  phone_number: '',
-  authenticationCode: '',
-  showConfirmationForm: false,
-};
-
-class MySignUp extends SignUp {
-  state = initialState;
-
-  onChangeText = (key, val) => {
-    this.setState({ [key]: val });
-  };
-
-  signUp = async () => {
-    const { given_name, family_name, password, phone_number } = this.state;
-    try {
-      const success = await Auth.signUp({
-        username: phone_number,
-        password,
-        attributes: {
-          given_name,
-          family_name,
-          phone_number,
-        },
-      });
-      console.log('user successfully signed upsss!: ', success);
-      this.setState({ showConfirmationForm: true });
-    } catch (err) {
-      console.log('error signing up: ', err);
-    }
-  };
-
-  confirmSignUp = async () => {
-    const { username, authenticationCode } = this.state;
-    try {
-      await Auth.confirmSignUp(username, authenticationCode);
-      console.log('successully signed up!');
-      alert('User signed up successfully!');
-      this.setState({ ...initialState });
-    } catch (err) {
-      console.log('error confirming signing up: ', err);
-    }
-  };
-
+class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        {!this.state.showConfirmationForm && (
-          <Fragment>
-            <TextInput
-              style={styles.input}
-              placeholder="Fist Name"
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('given_name', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Last Name"
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('family_name', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('password', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('phone_number', val)}
-            />
-            <Button title="Sign Up" onPress={this.signUp} />
-          </Fragment>
-        )}
-      </View>
+      <Authenticator 
+      // Optionally hard-code an initial state
+      authState="signIn",
+      // Pass in an already authenticated CognitoUser or FederatedUser object
+      authData={CognitoUser | 'username'} 
+      // Fired when Authentication State changes
+      onStateChange={(authState) => console.log(authState)} 
+      // An object referencing federation and/or social providers 
+      // *** Only supported on React/Web (Not React Native) ***
+      // For React Native use the API Auth.federatedSignIn()
+      federated={myFederatedConfig}
+      // A theme object to override the UI / styling
+      theme={myCustomTheme} 
+      // Hide specific components within the Authenticator
+      hide={ 
+          [
+              Greetings,
+              SignIn,
+              ConfirmSignIn,
+              RequireNewPassword,
+              SignUp,
+              ConfirmSignUp,
+              VerifyContact,
+              ForgotPassword,
+              TOTPSetup
+          ]
+      }
+      // or hide all the default components
+      hideDefault={true}
+      // Pass in an aws-exports configuration
+      amplifyConfig={myAWSExports}, 
+      // Pass in a message map for error strings
+      errorMessage={myMessageMap}
+  >
+      // Default components can be customized/passed in as child components. 
+      // Define them here if you used hideDefault={true}
+      <Greetings/>
+      <SignIn federated={myFederatedConfig}/>
+      <ConfirmSignIn/>
+      <RequireNewPassword/>
+      <SignUp/>
+      <ConfirmSignUp/>
+      <VerifyContact/>
+      <ForgotPassword/>
+      <TOTPSetup/>
+  </Authenticator>
     );
   }
 }
 
-export default class App extends React.Component {
-  state = {
-    user: null,
-  };
-
-  // async componentDidMount() {
-  //   try {
-  //     const user = await Auth.currentAuthenticatedUser();
-  //     console.log('user: ', user);
-  //     if (user) {
-  //       return <AppNavigator />;
-  //     }
-  //     return <LoginScreen setUser={u => this.setState({ user: u })} />;
-  //   } catch (err) {
-  //     console.log('error: ', err);
-  //     return <LoginScreen setUser={u => this.setState({ user: u })} />;
-  //   }
-  // }
-
-  render() {
-    return (
-      <Authenticator hideDefault>
-        <SignIn />
-        <MySignUp />
-        <ConfirmSignUp />
-        <Greetings />
-      </Authenticator>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-
-  input: {
-    width: 350,
-    height: 55,
-    backgroundColor: '#42A5F5',
-    margin: 10,
-    padding: 8,
-    color: 'white',
-    borderRadius: 14,
-  },
-});
+// export default withAuthenticator(App, false, [
+//   <SignIn />,
+//   <ConfirmSignIn />,
+//   <SignUpScreen />,
+//   <ConfirmSignUp />,
+//   <ForgotPassword />,
+// ]);
