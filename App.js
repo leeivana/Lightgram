@@ -8,6 +8,7 @@ import {
   ForgotPassword,
   RequireNewPassword,
   SignIn,
+  SignUp,
   VerifyContact,
   withAuthenticator,
 } from 'aws-amplify-react-native';
@@ -18,22 +19,8 @@ import awsconfig from './aws-exports';
 
 Amplify.configure(awsconfig);
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
-    return (
-      <View>
-        <Text>Hello</Text>
-      </View>
-    );
+    return <SignUpScreen />;
   }
 }
-
-export default withAuthenticator(App, false, [
-  <SignIn />,
-  <ConfirmSignIn />,
-  <VerifyContact />,
-  <SignUpScreen />,
-  <ConfirmSignUp />,
-  <ForgotPassword />,
-  <RequireNewPassword />,
-]);

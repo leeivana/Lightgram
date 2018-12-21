@@ -1,7 +1,6 @@
 // SignUp.js
 import React, { Fragment } from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
-import { SignUp } from 'aws-amplify-react-native';
 
 import { Auth } from 'aws-amplify';
 
@@ -9,12 +8,12 @@ const initialState = {
   given_name: '',
   family_name: '',
   password: '',
-  phone_number: '',
+  username: '',
   authenticationCode: '',
   showConfirmationForm: false,
 };
 
-export default class SignUpScreen extends SignUp {
+export default class SignUpScreen extends React.Component {
   state = initialState;
 
   onChangeText = (key, val) => {
@@ -22,16 +21,14 @@ export default class SignUpScreen extends SignUp {
   };
 
   signUp = async () => {
-    const { given_name, family_name, password, phone_number } = this.state;
+    const { given_name, family_name, password, username } = this.state;
     try {
       const success = await Auth.signUp({
-        username: phone_number,
+        username,
         password,
-        attributes: {
-          given_name,
-          family_name,
-          phone_number,
-        },
+        given_name,
+        family_name,
+        attributes: { phone_number: username },
       });
       console.log('user successfully signed upsss!: ', success);
       this.setState({ showConfirmationForm: true });
@@ -84,7 +81,7 @@ export default class SignUpScreen extends SignUp {
               placeholder="Phone Number"
               autoCapitalize="none"
               placeholderTextColor="white"
-              onChangeText={val => this.onChangeText('phone_number', val)}
+              onChangeText={val => this.onChangeText('username', val)}
             />
             <Button title="Sign Up" onPress={this.signUp} />
           </Fragment>
