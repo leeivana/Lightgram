@@ -1,8 +1,29 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { API, graphqlOperation } from 'aws-amplify';
 import Chats from '../components/Chat';
 
+const ListChats = `
+query list{
+  getUser(id:"1bb5da27-3471-475f-8968-a43c4403f8c5") {
+    conversations {
+      items {
+        conversation {
+          messages {
+          	items {
+              content
+            }
+          }
+          id
+          name
+          members 
+        }
+      }
+    }
+  }
+}
+`;
 export default class ChatsListScreen extends React.Component {
   static navigationOptions = () => ({
     title: 'Chats',
@@ -28,19 +49,25 @@ export default class ChatsListScreen extends React.Component {
     chats: [],
   };
 
-  componentDidMount() {
-    // ToDo
-    // Set Up database with chat lists and chats on aws
-    // Set data from back end to front end
-    // Display data on front end
+  async componentDidMount() {
+    const chats = await API.graphql(graphqlOperation(ListChats));
+    this.setState({ chats: [chats.data.getUser] });
+    console.log(this.state.chats);
+    this.state.chats.conversations.items.forEach(el => {
+      console.log(el.conversation.name);
+    });
   }
 
   render() {
-    const { chats } = this.state;
     const { container } = styles;
     return (
       <View style={container}>
         <ScrollView>
+          {/* {this.state.chats.map((c, i) => (
+            <div key={i}>
+              <Chats content={c.name} />
+            </div>
+          ))} */}
           <Chats
             first_name="Serhii"
             last_name="Panchyshyn"
