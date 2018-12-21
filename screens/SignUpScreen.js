@@ -1,8 +1,8 @@
 // SignUp.js
-import React, { Fragment } from 'react';
-import { View, Button, TextInput, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 
-import { Auth } from 'aws-amplify';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 
 const initialState = {
   given_name: '',
@@ -30,7 +30,7 @@ export default class SignUpScreen extends React.Component {
         family_name,
         attributes: { phone_number: username },
       });
-      console.log('user successfully signed upsss!: ', success);
+      console.log('user successfully signed up!: ', success);
       this.setState({ showConfirmationForm: true });
     } catch (err) {
       console.log('error signing up: ', err);
@@ -41,19 +41,23 @@ export default class SignUpScreen extends React.Component {
     const { username, authenticationCode } = this.state;
     try {
       await Auth.confirmSignUp(username, authenticationCode);
-      console.log('successully signed up!');
+      console.log('successfully signed up!');
       alert('User signed up successfully!');
       this.setState({ ...initialState });
+      // Once confirmed redirect to signIn page
+      //  navigate('SignIn')
     } catch (err) {
       console.log('error confirming signing up: ', err);
     }
   };
 
   render() {
+    const { showConfirmationForm } = this.state;
+
     return (
       <View style={styles.container}>
-        {!this.state.showConfirmationForm && (
-          <Fragment>
+        {!showConfirmationForm && (
+          <View>
             <TextInput
               style={styles.input}
               placeholder="Fist Name"
@@ -84,10 +88,10 @@ export default class SignUpScreen extends React.Component {
               onChangeText={val => this.onChangeText('username', val)}
             />
             <Button title="Sign Up" onPress={this.signUp} />
-          </Fragment>
+          </View>
         )}
-        {this.state.showConfirmationForm && (
-          <Fragment>
+        {showConfirmationForm && (
+          <View>
             <TextInput
               style={styles.input}
               placeholder="Authentication code"
@@ -96,7 +100,7 @@ export default class SignUpScreen extends React.Component {
               onChangeText={val => this.onChangeText('authenticationCode', val)}
             />
             <Button title="Confirm Sign Up" onPress={this.confirmSignUp} />
-          </Fragment>
+          </View>
         )}
       </View>
     );

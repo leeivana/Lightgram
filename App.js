@@ -14,6 +14,7 @@ import {
 } from 'aws-amplify-react-native';
 
 import SignUpScreen from './screens/SignUpScreen';
+import SignInScreen from './screens/SignInScreen';
 
 import awsconfig from './aws-exports';
 
