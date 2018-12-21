@@ -4,9 +4,9 @@
 export const getUser = `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id
@@ -42,9 +42,9 @@ export const listUsers = `query ListUsers(
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       conversations {
         items {
           id

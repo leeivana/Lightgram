@@ -6,9 +6,9 @@ export const onCreateConvoLink = `subscription OnCreateConvoLink($convoLinkUserI
     id
     user {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -32,9 +32,9 @@ export const onCreateMessage = `subscription OnCreateMessage($messageConversatio
     id
     author {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -43,9 +43,9 @@ export const onCreateMessage = `subscription OnCreateMessage($messageConversatio
     isSent
     recipient {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -66,9 +66,9 @@ export const onCreateMessage = `subscription OnCreateMessage($messageConversatio
 export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id
@@ -99,9 +99,9 @@ export const onCreateUser = `subscription OnCreateUser {
 export const onUpdateUser = `subscription OnUpdateUser {
   onUpdateUser {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id
@@ -132,9 +132,9 @@ export const onUpdateUser = `subscription OnUpdateUser {
 export const onDeleteUser = `subscription OnDeleteUser {
   onDeleteUser {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id

@@ -1,16 +1,16 @@
 projects:
-  lightgram:
+  lightgramApi:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
     excludes:
-      - amplify/**
+      - ./amplify/**
     extensions:
       amplify:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
-        graphQLApiId: 2e6ozoxg3rdmjpojfwjpa3blci
+        graphQLApiId: yblb7fjf55d2hbuaebyye7zwzi
       endpoints:
         prod: >-
-          https://z5iqzymw2fehdgqjdgojs2kdma.appsync-api.us-east-1.amazonaws.com/graphql
+          https://ir4uwwxltremnnzdrksqgtmxye.appsync-api.us-east-1.amazonaws.com/graphql

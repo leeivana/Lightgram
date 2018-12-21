@@ -4,9 +4,9 @@
 export const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id
@@ -37,9 +37,9 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
 export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id
@@ -70,9 +70,9 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
 export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   deleteUser(input: $input) {
     id
-    fistName
-    lastName
-    phoneNumber
+    given_name
+    family_name
+    phone_number
     conversations {
       items {
         id
@@ -138,9 +138,9 @@ export const createMessage = `mutation CreateMessage($input: CreateMessageInput!
     id
     author {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -149,9 +149,9 @@ export const createMessage = `mutation CreateMessage($input: CreateMessageInput!
     isSent
     recipient {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -174,9 +174,9 @@ export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!
     id
     author {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -185,9 +185,9 @@ export const updateMessage = `mutation UpdateMessage($input: UpdateMessageInput!
     isSent
     recipient {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -210,9 +210,9 @@ export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!
     id
     author {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -221,9 +221,9 @@ export const deleteMessage = `mutation DeleteMessage($input: DeleteMessageInput!
     isSent
     recipient {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -246,9 +246,9 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateConvoLink
     id
     user {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }
@@ -272,9 +272,9 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLink
     id
     user {
       id
-      fistName
-      lastName
-      phoneNumber
+      given_name
+      family_name
+      phone_number
       createdAt
       updatedAt
     }

@@ -125,7 +125,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "fistName",
+          "name" : "given_name",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -140,7 +140,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "lastName",
+          "name" : "family_name",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -155,7 +155,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "phoneNumber",
+          "name" : "phone_number",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1316,7 +1316,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "fistName",
+          "name" : "given_name",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1325,7 +1325,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "lastName",
+          "name" : "family_name",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1334,7 +1334,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "phoneNumber",
+          "name" : "phone_number",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1639,7 +1639,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "fistName",
+          "name" : "given_name",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -1652,7 +1652,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "lastName",
+          "name" : "family_name",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -1665,7 +1665,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "phoneNumber",
+          "name" : "phone_number",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -1718,7 +1718,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "fistName",
+          "name" : "given_name",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -1727,7 +1727,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "lastName",
+          "name" : "family_name",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -1736,7 +1736,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "phoneNumber",
+          "name" : "phone_number",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2241,16 +2241,92 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "DeleteConvoLinkInput",
+        "name" : "ModelIntFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
-          "name" : "id",
+          "name" : "ne",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "Int",
             "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "le",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "gt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "contains",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "notContains",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "between",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         } ],
@@ -2362,92 +2438,34 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelIntFilterInput",
+        "name" : "DeleteConversationInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
-          "name" : "ne",
+          "name" : "id",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
-        }, {
-          "name" : "eq",
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "DeleteConvoLinkInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "ID",
             "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "le",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "ge",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "gt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "contains",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "notContains",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "between",
-          "description" : null,
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
           },
           "defaultValue" : null
         } ],
@@ -2518,24 +2536,6 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "DeleteConversationInput",
-        "description" : null,
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "id",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3327,23 +3327,6 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "aws_publish",
         "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -3402,6 +3385,23 @@
             }
           },
           "defaultValue" : null
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
         } ],
         "onOperation" : false,
         "onFragment" : false,
