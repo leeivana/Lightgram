@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text, Button } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
-import Chats from '../components/Chat';
 import Chat from '../components/Chat';
 
 const ListChats = `
@@ -50,9 +49,10 @@ export default class ChatsListScreen extends React.Component {
   };
 
   async componentDidMount() {
+    const { chats } = this.state;
     const chatsData = await API.graphql(graphqlOperation(ListChats));
     const numberOfChats = chatsData.data.getUser.conversations.items;
-    this.setState({ chats: [...numberOfChats] });
+    this.setState({ chats: [...numberOfChats, ...chats] });
   }
 
   render() {
