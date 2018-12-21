@@ -140,10 +140,10 @@
 							"Outputs.UserPoolId"
 						]
 					},
-					"schemaGraphql": "s3://ightgram-20181220163157-deployment/amplify-appsync-files/schema.graphql.1545341881421",
+					"schemaGraphql": "s3://ightgram-20181220163157-deployment/amplify-appsync-files/schema.graphql.1545352145687",
 					"ResolverBucket": "ightgram-20181220163157-deployment",
 					"ResolverRootKey": "amplify-appsync-files",
-					"DeploymentTimestamp": "1545341881421"
+					"DeploymentTimestamp": "1545352145687"
 				}
 			}
 		}

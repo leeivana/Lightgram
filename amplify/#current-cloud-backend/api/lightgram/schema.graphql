@@ -2,9 +2,9 @@ type User
   @model 
   @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
   id: ID!
-  given_name: String!
-  family_name: String!
-  phone_number: String!
+  fistName: String!
+  lastName: String!
+  phoneNumber: String!
   conversations: [ConvoLink] @connection(name: "UserLinks")
   messages: [Message] @connection(name: "UserMessages")
 	createdAt: String

@@ -19,7 +19,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/ightgram-20181220163157-deployment/amplify-cfn-templates/auth/lightgramV2-cloudformation-template.yml",
 				"logicalId": "authlightgramV2"
 			},
-			"lastPushTimeStamp": "2018-12-20T21:43:14.364Z",
+			"lastPushTimeStamp": "2018-12-21T00:30:45.685Z",
 			"output": {
 				"CreatedSNSRole": "arn:aws:iam::448123779919:role/lightgramV2_sns-role",
 				"AppClientSecret": "v3ovu2pic28p22a0dm0km5i16r8e2u7804r6apafks5rjkpt32n",
@@ -50,8 +50,8 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/ightgram-20181220163157-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"logicalId": "apilightgram"
 			},
-			"lastPushTimeStamp": "2018-12-20T21:43:14.364Z",
-			"lastPushDirHash": "vAL/6O+9eJU2jO6GJ2uk6X9Ft4k="
+			"lastPushTimeStamp": "2018-12-21T00:30:46.857Z",
+			"lastPushDirHash": "Nh4btdY1GHl4cnTsT2G24Q+qZBo="
 		}
 	}
 }
