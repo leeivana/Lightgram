@@ -15,6 +15,7 @@ import {
 
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/SignInScreen';
+import AppNavigator from './navigation/AppNavigator';
 
 import awsconfig from './aws-exports';
 
@@ -22,6 +23,6 @@ Amplify.configure(awsconfig);
 
 export default class App extends React.Component {
   render() {
-    return <SignUpScreen />;
+    return <AppNavigator />;
   }
 }

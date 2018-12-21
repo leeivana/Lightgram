@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text, Button } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { API, graphqlOperation } from 'aws-amplify';
 import Chats from '../components/Chat';
+import Chat from '../components/Chat';
 
 const ListChats = `
 query list{
@@ -50,52 +50,36 @@ export default class ChatsListScreen extends React.Component {
   };
 
   async componentDidMount() {
-    const chats = await API.graphql(graphqlOperation(ListChats));
-    this.setState({ chats: [chats.data.getUser] });
-    console.log(this.state.chats);
-    this.state.chats.conversations.items.forEach(el => {
-      console.log(el.conversation.name);
-    });
+    const chatsData = await API.graphql(graphqlOperation(ListChats));
+    const numberOfChats = chatsData.data.getUser.conversations.items;
+    this.setState({ chats: [...numberOfChats] });
   }
 
   render() {
+    const { chats } = this.state;
     const { container } = styles;
     return (
       <View style={container}>
         <ScrollView>
-          {/* {this.state.chats.map((c, i) => (
-            <div key={i}>
-              <Chats content={c.name} />
-            </div>
-          ))} */}
-          <Chats
-            first_name="Serhii"
-            last_name="Panchyshyn"
-            time=""
-            content="JavaScript for life!"
-            src=""
-          />
-          <Chats
-            first_name="Tony"
-            last_name="Lachmaniucu"
-            time=""
-            content="I am gonna make best AI ever"
-            src=""
-          />
-          <Chats
-            first_name="Joe"
-            last_name="Pham"
-            time=""
-            content="NOOOOOOOO!"
-            src=""
-          />
-          <Chats
-            first_name="Ivana"
-            last_name="Lee"
-            time=""
-            content="I love this app"
-            src=""
-          />
+          {chats.map(el => {
+            const { id, name, messages } = el.conversation;
+            const { items } = messages;
+            console.log(items);
+
+            return (
+              items.length !== 0 && (
+                <Chat
+                  key={id}
+                  conversationName={name}
+                  content={
+                    items[items.length - 1]
+                      ? items[items.length - 1].content
+                      : ''
+                  }
+                />
+              )
+            );
+          })}
         </ScrollView>
       </View>
     );

@@ -49,7 +49,7 @@ SettingsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  ContactsStack,
+  // ContactsStack,
   ChatsListStack,
   SettingsStack,
 });
