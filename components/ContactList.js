@@ -7,9 +7,9 @@ import { withNavigation } from 'react-navigation';
 const ContactList = props => {
   const list = ({ allContacts }) => {
     if (allContacts) {
-      return allContacts.map(item => (
+      return allContacts.map((item, index) => (
         <TouchableOpacity
-          key={item.id}
+          key={index}
           onPress={() => {
             props.navigation.navigate('Chat');
           }}

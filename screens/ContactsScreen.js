@@ -81,12 +81,9 @@ export default class ContactsScreen extends React.Component {
     let friendWithApp = {};
     const friends = [];
 
-    awsContacts.map((item, index) => {
+    awsContacts.map(item => {
       // const found = arr1.some(r => arr2.includes(r));
-      if (
-        formattedNumbers.includes(item.phone_number) &&
-        !formattedNumbers.some(r => friends.includes(r))
-      ) {
+      if (formattedNumbers.includes(item.phone_number)) {
         friendWithApp = {
           given_name: item.given_name,
           last_name: item.last_name,
@@ -95,15 +92,12 @@ export default class ContactsScreen extends React.Component {
         friends.push(friendWithApp);
       }
     });
-
-    console.log(friends);
     return friends;
   };
 
   render() {
     const formatNumber = this.formatPhoneNumber();
-    // console.log(this.getFriendsWithApp(formatNumber));
-    // console.log(this.state.contacts);
+
     return (
       <View style={styles.container}>
         <ScrollView>
