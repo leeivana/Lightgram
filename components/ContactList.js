@@ -24,6 +24,7 @@ const ContactList = props => {
             }}
           >
             <View>
+              {/*               
               {item.imageAvailable ? (
                 <Image
                   style={styles.imageStyle}
@@ -35,7 +36,11 @@ const ContactList = props => {
                   name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
                   size={75}
                 />
-              )}
+              )} */}
+              <Icon.Ionicons
+                name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
+                size={75}
+              />
             </View>
 
             <View>
@@ -48,13 +53,11 @@ const ContactList = props => {
               >
                 <Text
                   style={{ marginLeft: 15, fontWeight: '600' }}
-                >{`${item.firstName || ''} ${item.lastName || ''}`}</Text>
+                >{`${item.given_name || ''} ${item.last_name || ''}`}</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ marginLeft: 15, marginRight: 5 }} note>
-                  {'phoneNumbers' in item
-                    ? item.phoneNumbers[0].number
-                    : item.phoneNumbers}
+                  {item.phone_number}
                 </Text>
               </View>
             </View>
