@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "lightgramApi",
+    "schemaGraphql": "s3://ightgram-20181220210253-deployment/amplify-appsync-files/schema.graphql.1545358028809",
+    "ResolverBucket": "ightgram-20181220210253-deployment",
+    "ResolverRootKey": "amplify-appsync-files",
+    "DeploymentTimestamp": "1545358028809"
+}

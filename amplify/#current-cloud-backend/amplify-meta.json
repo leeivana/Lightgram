@@ -1,0 +1,32 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "ightgram-20181220210253-authRole",
+			"UnauthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181220210253-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::448123779919:role/ightgram-20181220210253-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "ightgram-20181220210253-deployment",
+			"UnauthRoleName": "ightgram-20181220210253-unauthRole",
+			"StackName": "ightgram-20181220210253",
+			"StackId": "arn:aws:cloudformation:us-east-1:448123779919:stack/ightgram-20181220210253/872d12d0-04c4-11e9-86a5-127b0ce5d1d0"
+		}
+	},
+	"api": {
+		"lightgramApi": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"securityType": "API_KEY",
+				"GraphQLAPIIdOutput": "yblb7fjf55d2hbuaebyye7zwzi",
+				"GraphQLAPIEndpointOutput": "https://ir4uwwxltremnnzdrksqgtmxye.appsync-api.us-east-1.amazonaws.com/graphql",
+				"GraphQLAPIKeyOutput": "da2-bt7ab4gg35gulec54zu22rqucu"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/ightgram-20181220210253-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apilightgramApi"
+			},
+			"lastPushTimeStamp": "2018-12-21T02:10:20.741Z",
+			"lastPushDirHash": "aCiPsYMvRC4GNcPL33M6HVRqhTw="
+		}
+	}
+}

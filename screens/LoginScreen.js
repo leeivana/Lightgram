@@ -55,31 +55,6 @@ class Login extends React.Component {
     this.setState({ [key]: val });
   };
 
-  signIn = async () => {
-    const { username } = this.state;
-    try {
-      const user = await Auth.signIn({
-        username,
-        password: username,
-      });
-      console.log('user successfully signed in!', user);
-      this.setState({ user, showConfirmationForm: true });
-    } catch (err) {
-      console.log('error:', err);
-    }
-  };
-
-  confirmSignIn = async () => {
-    const { user, authenticationCode } = this.state;
-    try {
-      await Auth.confirmSignIn(user, authenticationCode);
-      console.log('successfully sign in!');
-      this.props.setUser(user);
-    } catch (err) {
-      console.log('error:', err);
-    }
-  };
-
   signUp = async () => {
     const { user, username } = this.state;
     console.log(username);

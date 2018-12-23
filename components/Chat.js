@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-const Chats = ({ first_name, last_name, time, content, src, navigation }) => {
+const Chats = ({ conversationName, time, content, src, navigation }) => {
   const {
     container,
     imageStyle,
@@ -23,9 +23,7 @@ const Chats = ({ first_name, last_name, time, content, src, navigation }) => {
         <Image source={{ src }} style={imageStyle} resizeMode="contain" />
         <View>
           <View style={headerContentStyle}>
-            <Text style={headerTextStyle}>
-              {first_name} {last_name}
-            </Text>
+            <Text style={headerTextStyle}>{conversationName}</Text>
             <Text style={timeStyle}>{time}</Text>
           </View>
           <View style={msgWrapper}>
