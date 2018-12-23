@@ -20,6 +20,9 @@ query list{
     messages {
       items{
         content
+        author{
+          given_name
+        }
         id
         authorId
         createdAt
@@ -52,13 +55,14 @@ class ChatScreen extends Component {
   async componentDidMount() {
     const messageData = await API.graphql(graphqlOperation(ListMessages)); 
     const allMessages = messageData.data.getConvo.messages.items;
+    console.log('all messages', allMessages);
     allMessages.forEach(el => {
       let newMessage = {_id: el.id, 
         text: el.content,
         createdAt: el.createdAt,
         user: {
           _id: el.authorId,
-          name: 'Bob',
+          name: el.author['given_name'],
         }
       }; 
       this.setState(currentState => ({
@@ -67,7 +71,7 @@ class ChatScreen extends Component {
         ]
       }))
     })
-    console.log('State', this.state.messages);
+    // console.log('State', this.state.messages);
   }
 
   //SETSTATE NOTES 
