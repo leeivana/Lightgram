@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { getUser } from '../src/queryHelper';
+import { createUser } from '../src/mutations';
 
 export default class SignIn extends React.Component {
   state = {
@@ -20,6 +22,10 @@ export default class SignIn extends React.Component {
     try {
       const user = await Auth.signIn(username, password);
       console.log('user successfully signed in!', user);
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const userExists = await getUser(currentUser.username);
+      console.log('currentUser', currentUser);
+      console.log('userExists', userExists);
       this.setState({ user, showConfirmationForm: true });
     } catch (err) {
       console.log('error:', err);
@@ -31,25 +37,22 @@ export default class SignIn extends React.Component {
     try {
       // first try to sign in
       await Auth.confirmSignIn(user, authenticationCode);
-
       // once signed in, get current user information
       const currentUser = await Auth.currentAuthenticatedUser();
-      const {
-        signInUserSession: {
-          accessToken: {
-            payload: { sub, username },
-          },
-        },
-      } = currentUser;
-      console.log('SUB STUFF: ', sub);
-      console.log('username STUFF: ', username);
-
+      const userExists = await getUser(currentUser.username);
       // next, check to see if user exists in the database
-      // if user does not exists, create a new user
-
-      // Once confirmed redirect to signIn page
+      if (!userExists) {
+        // if user does not exists, create a new user
+        const createdUser = await createUser({
+          id: currentUser.username,
+          username: currentUser.username,
+        });
+      }
+      // Once confirmed redirect to Main page
+      // Also need to update global state of the user
+      // TO DO
+      // Figure out the way to pass the state around
       //  navigate('Main page')
-      // navigate('Main app')
       console.log('user successfully signed in!', user);
     } catch (err) {
       console.log('error:', err);
