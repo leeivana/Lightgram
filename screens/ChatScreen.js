@@ -13,6 +13,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 // query for all messages given a certain chatid 
 // subscription for new messages in the chat 
 
+//replace id with id of specific conversation 
 const ListMessages = `
 query list{
   getConvo(id: "a195a3ad-d953-4fb6-a26b-19ebb94eeaf9"){
@@ -21,6 +22,7 @@ query list{
         content
         id
         authorId
+        createdAt
       }
     }
   }
@@ -48,14 +50,12 @@ class ChatScreen extends Component {
 
   //Updates messages 
   async componentDidMount() {
-    const { messages } = this.state; 
     const messageData = await API.graphql(graphqlOperation(ListMessages)); 
     const allMessages = messageData.data.getConvo.messages.items;
-    console.log('All Messages: ', allMessages); 
     allMessages.forEach(el => {
       let newMessage = {_id: el.id, 
         text: el.content,
-        createdAt: new Date(),
+        createdAt: el.createdAt,
         user: {
           _id: el.authorId,
           name: 'Bob',
