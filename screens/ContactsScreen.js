@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ScrollView, StyleSheet, View, Linking } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
-import { WebBrowser, Permissions, Contacts } from 'expo';
+import { Permissions, Contacts } from 'expo';
 import ContactList from '../components/ContactList';
 
 const listUsers = `
