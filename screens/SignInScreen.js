@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import { getUser } from '../src/queryHelper';
-import { createUser } from '../src/mutations';
+import { createUser } from '../src/mutationsHelper';
 
 export default class SignIn extends React.Component {
   state = {
@@ -23,9 +23,7 @@ export default class SignIn extends React.Component {
       const user = await Auth.signIn(username, password);
       console.log('user successfully signed in!', user);
       const currentUser = await Auth.currentAuthenticatedUser();
-      const userExists = await getUser(currentUser.username);
       console.log('currentUser', currentUser);
-      console.log('userExists', userExists);
       this.setState({ user, showConfirmationForm: true });
     } catch (err) {
       console.log('error:', err);
@@ -40,16 +38,20 @@ export default class SignIn extends React.Component {
       // once signed in, get current user information
       const currentUser = await Auth.currentAuthenticatedUser();
       const userExists = await getUser(currentUser.username);
+      let authenticatedUser;
       // next, check to see if user exists in the database
       if (!userExists) {
         // if user does not exists, create a new user
-        const createdUser = await createUser({
+        authenticatedUser = await createUser({
           id: currentUser.username,
-          username: currentUser.username,
+          given_name: currentUser.attributes.given_name,
+          family_name: currentUser.attributes.family_name,
+          phone_number: currentUser.attributes.phone.number,
         });
       }
       // Once confirmed redirect to Main page
       // Also need to update global state of the user
+      // this.GLOBAL.STATE = authenticatedUser
       // TO DO
       // Figure out the way to pass the state around
       //  navigate('Main page')
