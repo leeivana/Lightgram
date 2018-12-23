@@ -1,20 +1,17 @@
-// SignUp.js
 import React from 'react';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import { View, Button, TextInput, StyleSheet } from 'react-native';
 
-import { Auth, API, graphqlOperation } from 'aws-amplify';
-
-const initialState = {
-  given_name: '',
-  family_name: '',
-  password: '',
-  username: '',
-  authenticationCode: '',
-  showConfirmationForm: false,
-};
+import { Auth } from 'aws-amplify';
 
 export default class SignUpScreen extends React.Component {
-  state = initialState;
+  state = {
+    given_name: '',
+    family_name: '',
+    password: '',
+    username: '',
+    authenticationCode: '',
+    showConfirmationForm: false,
+  };
 
   onChangeText = (key, val) => {
     this.setState({ [key]: val });
@@ -26,9 +23,7 @@ export default class SignUpScreen extends React.Component {
       const success = await Auth.signUp({
         username,
         password,
-        given_name,
-        family_name,
-        attributes: { phone_number: username },
+        attributes: { phone_number: username, given_name, family_name },
       });
       console.log('user successfully signed up!: ', success);
       this.setState({ showConfirmationForm: true });
@@ -43,7 +38,6 @@ export default class SignUpScreen extends React.Component {
       await Auth.confirmSignUp(username, authenticationCode);
       console.log('successfully signed up!');
       alert('User signed up successfully!');
-      this.setState({ ...initialState });
       // Once confirmed redirect to signIn page
       //  navigate('SignIn')
     } catch (err) {
