@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-
-import { Auth } from 'aws-amplify';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 
 export default class SignIn extends React.Component {
   state = {
@@ -34,6 +33,17 @@ export default class SignIn extends React.Component {
       await Auth.confirmSignIn(user, authenticationCode);
 
       // once signed in, get current user information
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const {
+        signInUserSession: {
+          accessToken: {
+            payload: { sub, username },
+          },
+        },
+      } = currentUser;
+      console.log('SUB STUFF: ', sub);
+      console.log('username STUFF: ', username);
+
       // next, check to see if user exists in the database
       // if user does not exists, create a new user
 
