@@ -1,16 +1,40 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
-export const GetUser = `
-    query GetUser($id: ID!) {
-        getUser(id: $id) {
-          id
-          given_name
-          family_name
-          phone_number
-        }
+export const GetUser = `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    given_name
+    family_name
+    phone_number
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
+    messages {
+      items {
+        id
+        authorId
+        content
+        isSent
+        messageConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
 `;
+
 export const listUsers = `query ListUsers(
   $filter: ModelUserFilterInput
   $limit: Int

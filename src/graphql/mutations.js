@@ -7,6 +7,30 @@ export const CreateUser = `mutation CreateUser($input: CreateUserInput!) {
     given_name
     family_name
     phone_number
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        convoLinkConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        authorId
+        content
+        isSent
+        messageConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
   }
 }
 `;
