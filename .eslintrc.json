@@ -11,7 +11,8 @@
     "ecmaFeatures": {
       "ecmaVersion": true,
       "impliedStrict": true,
-      "classes": true
+      "classes": true,
+      "legacyDecorators": true
     }
   },
   "env": {
