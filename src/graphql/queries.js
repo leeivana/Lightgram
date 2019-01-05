@@ -1,7 +1,8 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
-export const GetUser = `query GetUser($id: ID!) {
+export const basicUserQuery = `
+query getUser($id: ID!) {
   getUser(id: $id) {
     id
     given_name

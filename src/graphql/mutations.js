@@ -1,70 +1,15 @@
 // eslint-disable
 // this is an auto generated file. This will be overwritten
 
-export const CreateUser = `mutation CreateUser($input: CreateUserInput!) {
-  createUser(input: $input) {
-    id
-    given_name
-    family_name
-    phone_number
-    conversations {
-      items {
-        id
-        convoLinkUserId
-        convoLinkConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    messages {
-      items {
-        id
-        authorId
-        content
-        isSent
-        messageConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-`;
-
-export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
-  updateUser(input: $input) {
-    id
-    given_name
-    family_name
-    phone_number
-    conversations {
-      items {
-        id
-        convoLinkUserId
-        convoLinkConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    messages {
-      items {
-        id
-        authorId
-        content
-        isSent
-        messageConversationId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
+export const createUserMutation = `
+mutation createUser($id: ID!, $given_name: String!, $family_name: String!, $phone_number: String!) {
+  createUser(input: {
+    id: $id,
+    given_name: $given_name,
+    family_name: $family_name,
+    phone_number: $phone_number
+  }) {
+    id given_name family_name phone_number
   }
 }
 `;

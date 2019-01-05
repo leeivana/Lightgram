@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Auth } from 'aws-amplify';
-import { getUser } from '../src/queryHelper';
-import { createUser } from '../src/mutationsHelper';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { basicUserQuery } from '../src/graphql/queries';
+import { createUserMutation } from '../src/graphql/mutations';
 
 export default class SignIn extends React.Component {
   state = {
+    user: {},
     username: '',
     password: '',
-    user: {},
     authenticationCode: '',
     showConfirmationForm: false,
   };
@@ -21,12 +21,10 @@ export default class SignIn extends React.Component {
     const { username, password } = this.state;
     try {
       const user = await Auth.signIn(username, password);
-      console.log('user successfully signed in!', user);
-      const currentUser = await Auth.currentAuthenticatedUser();
-      console.log('currentUser', currentUser);
+      console.log('successfully signed in!');
       this.setState({ user, showConfirmationForm: true });
     } catch (err) {
-      console.log('error:', err);
+      console.log('error signing in...', err);
     }
   };
 
@@ -37,27 +35,38 @@ export default class SignIn extends React.Component {
       await Auth.confirmSignIn(user, authenticationCode);
       // once signed in, get current user information
       const currentUser = await Auth.currentAuthenticatedUser();
-      const userExists = await getUser(currentUser.username);
-      let authenticatedUser;
+      const {
+        attributes: { given_name, family_name, phone_number },
+        signInUserSession: {
+          accessToken: {
+            payload: { sub },
+          },
+        },
+      } = currentUser;
+      let authenticatedUser = await API.graphql(
+        graphqlOperation(basicUserQuery, { id: sub })
+      );
+      console.log(currentUser);
+      console.log('authenticatedUser', authenticatedUser);
       // next, check to see if user exists in the database
-      if (!userExists) {
+      if (!authenticatedUser.data.getUser) {
         // if user does not exists, create a new user
-        authenticatedUser = await createUser({
-          id: currentUser.username,
-          given_name: currentUser.attributes.given_name,
-          family_name: currentUser.attributes.family_name,
-          phone_number: currentUser.attributes.phone.number,
-        });
+        await API.graphql(
+          graphqlOperation(createUserMutation, {
+            id: sub,
+            given_name,
+            family_name,
+            phone_number,
+          })
+        );
+        authenticatedUser = await API.graphql(
+          graphqlOperation(basicUserQuery, { id: sub })
+        );
+        console.log('New authenticatedUser', authenticatedUser);
       }
-      // Once confirmed redirect to Main page
-      // Also need to update global state of the user
-      // this.GLOBAL.STATE = authenticatedUser
-      // TO DO
-      // Figure out the way to pass the state around
-      //  navigate('Main page')
-      console.log('user successfully signed in!', user);
+      console.log('user successfully confirm sign in!');
     } catch (err) {
-      console.log('error:', err);
+      console.log('error confirming sign in: ', err);
     }
   };
 
