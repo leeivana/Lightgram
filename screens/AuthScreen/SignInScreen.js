@@ -63,6 +63,8 @@ export default class SignIn extends React.Component {
           graphqlOperation(basicUserQuery, { id: sub })
         );
       }
+      // Update user store
+      this.props.navigation.navigate('Main');
       console.log('user successfully confirm sign in!');
     } catch (err) {
       console.log('error confirming sign in: ', err);
