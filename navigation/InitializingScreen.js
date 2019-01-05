@@ -2,8 +2,10 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
-import { colors } from '../constants/Styling';
+import { basicUserQuery } from '../src/graphql/queries';
 
 const styles = StyleSheet.create({
   buttonCircle: {
@@ -46,11 +48,34 @@ const slides = [
     backgroundColor: '#22bcb5',
   },
 ];
+
 // @inject('userStore')
-export default class LandingScreen extends React.Component {
+export default class InitializingScreen extends React.Component {
   state = {
     goToLogin: false,
   };
+
+  async componentDidMount() {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const {
+        signInUserSession: {
+          accessToken: {
+            payload: { sub },
+          },
+        },
+      } = currentUser;
+      const authenticatedUser = await API.graphql(
+        graphqlOperation(basicUserQuery, { id: sub })
+      );
+      // this.props.userStore.updateUser(authenticatedUser.data.getUser)
+      setTimeout(() => {
+        this.props.navigation.navigate('Main');
+      }, 350);
+    } catch (err) {
+      console.log('err:', err);
+    }
+  }
 
   _onDone = () => {
     this.setState({ goToLogin: true });
