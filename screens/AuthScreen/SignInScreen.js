@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { basicUserQuery } from '../src/graphql/queries';
-import { createUserMutation } from '../src/graphql/mutations';
+import { inject } from 'mobx-react';
+import { basicUserQuery } from '../../src/graphql/queries';
+import { createUserMutation } from '../../src/graphql/mutations';
 
+// @inject('userStore')
 export default class SignIn extends React.Component {
   state = {
     user: {},

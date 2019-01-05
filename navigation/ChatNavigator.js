@@ -1,10 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import {
-  createStackNavigator,
-  createMaterialTopTabNavigator,
-  TabNavigator,
-} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import ChatScreen from '../screens/ChatScreen';
 import ChatsListScreen from '../screens/ChatListScreen';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ScrollView, StyleSheet, View, Linking } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Permissions, Contacts } from 'expo';
-import ContactList from '../components/ContactList';
+import ContactList from '../../components/ContactList';
 
 const listUsers = `
 query list{

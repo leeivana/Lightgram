@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text, Button } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
-import Chat from '../components/Chat';
+import Chat from '../../components/Chat';
 
 const ListChats = `
 query list{
