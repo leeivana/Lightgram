@@ -5,7 +5,7 @@ import { inject } from 'mobx-react';
 import { basicUserQuery } from '../../src/graphql/queries';
 import { createUserMutation } from '../../src/graphql/mutations';
 
-// @inject('userStore')
+@inject('userStore')
 export default class SignIn extends React.Component {
   state = {
     user: {},
@@ -64,6 +64,8 @@ export default class SignIn extends React.Component {
         );
       }
       // Update user store
+      this.props.userStore.updateUser(authenticatedUser.data.getUser);
+
       this.props.navigation.navigate('Main');
       console.log('user successfully confirm sign in!');
     } catch (err) {

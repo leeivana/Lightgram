@@ -49,7 +49,7 @@ const slides = [
   },
 ];
 
-// @inject('userStore')
+@inject('userStore')
 export default class InitializingScreen extends React.Component {
   state = {
     goToLogin: false,
@@ -68,10 +68,9 @@ export default class InitializingScreen extends React.Component {
       const authenticatedUser = await API.graphql(
         graphqlOperation(basicUserQuery, { id: sub })
       );
-      // this.props.userStore.updateUser(authenticatedUser.data.getUser)
-      setTimeout(() => {
-        this.props.navigation.navigate('Main');
-      }, 350);
+      this.props.userStore.updateUser(authenticatedUser.data.getUser);
+
+      this.props.navigation.navigate('Main');
     } catch (err) {
       console.log('err:', err);
     }
