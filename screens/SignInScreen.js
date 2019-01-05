@@ -46,8 +46,6 @@ export default class SignIn extends React.Component {
       let authenticatedUser = await API.graphql(
         graphqlOperation(basicUserQuery, { id: sub })
       );
-      console.log(currentUser);
-      console.log('authenticatedUser', authenticatedUser);
       // next, check to see if user exists in the database
       if (!authenticatedUser.data.getUser) {
         // if user does not exists, create a new user
@@ -62,7 +60,6 @@ export default class SignIn extends React.Component {
         authenticatedUser = await API.graphql(
           graphqlOperation(basicUserQuery, { id: sub })
         );
-        console.log('New authenticatedUser', authenticatedUser);
       }
       console.log('user successfully confirm sign in!');
     } catch (err) {
