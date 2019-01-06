@@ -5,7 +5,7 @@ import Chat from '../../components/Chat';
 
 const ListChats = `
 query list{
-  getUser(id:"1bb5da27-3471-475f-8968-a43c4403f8c5") {
+  getUser(id:"f2a01b44-8631-4576-923b-ff13eccf8226") {
     conversations {
       items {
         conversation {

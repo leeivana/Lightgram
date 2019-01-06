@@ -17,6 +17,7 @@ const Chats = ({ conversationName, time, content, src, navigation }) => {
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('Chat');
+        console.log('pressed');
       }}
     >
       <View style={container}>

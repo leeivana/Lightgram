@@ -3,28 +3,19 @@ import { Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { API, graphqlOperation } from 'aws-amplify';
+import { getConvo, basicUserQuery } from '../../src/graphql/queries';
+import { onCreateMessage } from '../../src/graphql/subscriptions';
 
-// mutation to create messages given a certain chatid
-// query for all messages given a certain chatid
-// subscription for new messages in the chat
-
-// replace id with id of specific conversation
-const ListMessages = `
-query list{
-  getConvo(id: "a195a3ad-d953-4fb6-a26b-19ebb94eeaf9"){
-    messages {
-      items{
-        content
-        author{
-          given_name
-        }
-        id
-        authorId
-        createdAt
-      }
+const CreateMessage = `
+  mutation($content: String!){
+    createMessage(input: {
+      content: $content
+      authorId: "9c570049-788c-4bfe-93ea-0c645df4af73"
+      messageConversationId: "a195a3ad-d953-4fb6-a26b-19ebb94eeaf9"
+    }){
+      authorId content isSent messageConversationId createdAt
     }
   }
-}
 `;
 
 class ChatScreen extends Component {
@@ -34,7 +25,7 @@ class ChatScreen extends Component {
       <Button
         title="Back"
         onPress={() => {
-          navigation.navigate('Chats');
+          navigation.navigate('ChatsListScreen');
         }}
       />
     ),
@@ -46,32 +37,80 @@ class ChatScreen extends Component {
 
   // Updates messages
   async componentDidMount() {
-    const messageData = await API.graphql(graphqlOperation(ListMessages));
+    const messageData = await API.graphql(
+      graphqlOperation(getConvo, { id: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad' })
+    );
     const allMessages = messageData.data.getConvo.messages.items;
-    console.log('all messages', allMessages);
     allMessages.forEach(el => {
       const { messages } = this.state;
-
+      const { id, content, createdAt, authorId } = el;
+      // const { given_name } = el.author;
       const newMessage = {
-        _id: el.id,
-        text: el.content,
-        createdAt: el.createdAt,
+        _id: id,
+        text: content,
+        createdAt,
         user: {
-          _id: el.authorId,
-          name: el.author.given_name,
+          _id: authorId,
+          name: '',
         },
       };
-      this.setState({
-        messages: [newMessage, ...messages],
-      });
+
+      (async () => {
+        const payload = await API.graphql(
+          graphqlOperation(basicUserQuery, { id: authorId })
+        );
+        console.log('payload', payload);
+        const givenName = payload.data.getUser.given_name;
+        newMessage.user.name = givenName;
+        console.log('obj', newMessage);
+      })().then(
+        this.setState({
+          messages: [newMessage, ...messages],
+        })
+      );
+      console.log('state', this.state.messages);
+    });
+    API.graphql(
+      graphqlOperation(onCreateMessage, {
+        messageConversationId: 'a195a3ad-d953-4fb6-a26b-19ebb94eeaf9',
+      })
+    ).subscribe({
+      next: eventData => {
+        const message = eventData.value.data.onCreateMessage;
+        const { id, content, authorId } = message;
+        console.log(id, content, authorId);
+        const messageObj = {
+          _id: message.id,
+          text: content,
+          user: {
+            _id: authorId,
+          },
+        };
+        const messageArray = [
+          ...this.state.messages.filter(
+            i => i.messageConversationId !== message.messageConversationId
+          ),
+          messageObj,
+        ];
+        console.log('message array', messageArray);
+        this.setState({ messages: messageArray });
+      },
     });
   }
 
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }));
-  }
+  onSend = async (messages = []) => {
+    if (messages === []) return;
+    const { text } = messages[0];
+    try {
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, messages),
+      }));
+      await API.graphql(graphqlOperation(CreateMessage, { content: text }));
+      console.log('success');
+    } catch (err) {
+      console.log('error', err);
+    }
+  };
 
   render() {
     const { messages } = this.state;
@@ -80,7 +119,8 @@ class ChatScreen extends Component {
         messages={messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: 1,
+          // id of current user
+          _id: '9c570049-788c-4bfe-93ea-0c645df4af73',
         }}
       />
     );
