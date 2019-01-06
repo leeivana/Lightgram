@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { View, StyleSheet, TextInput, Button } from 'react-native';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
 import { basicUserQuery } from '../../src/graphql/queries';
