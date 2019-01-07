@@ -66,9 +66,14 @@ class ChatScreen extends Component {
           const givenName = payload.data.getUser.given_name;
           newMessage.user.name = givenName;
           newMessageArray.push(newMessage);
+          newMessageArray.sort((a, b) => {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
         })
       );
-      this.setState({ messages: newMessageArray, ...messages });
+      this.setState({ messages: newMessageArray });
     } catch (e) {
       console.error(e);
     }
