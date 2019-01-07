@@ -1,13 +1,14 @@
 import { createSwitchNavigator } from 'react-navigation';
-
-import InitializingScreen from './InitializingScreen';
+import Init from './Init';
 import AuthScreenNavigation from './AuthScreenNavigation';
 import MainAppNavigator from './MainAppNavigator';
+import AboutScreen from '../screens/AboutScreen';
 import ChatScreenStack from './ChatNavigator';
 
 export default createSwitchNavigator({
-  Initializing: { screen: InitializingScreen },
+  Init: { screen: Init },
   Auth: { screen: AuthScreenNavigation },
+  About: { screen: AboutScreen },
   Main: { screen: MainAppNavigator },
   Chat: { screen: ChatScreenStack },
 });

@@ -76,7 +76,7 @@ export default class SignIn extends React.Component {
       // Update user store
       this.props.userStore.updateUser(authenticatedUser.data.getUser);
 
-      this.props.navigation.navigate('Main');
+      this.props.navigation.navigate('About');
       console.log('user successfully confirm sign in!');
     } catch (err) {
       console.log('error confirming sign in: ', err);
