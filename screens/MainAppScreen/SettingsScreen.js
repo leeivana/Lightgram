@@ -1,19 +1,43 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Container, Header, Content, Button, Text } from 'native-base';
+import { Auth } from 'aws-amplify';
 
+import { inject } from 'mobx-react';
+import {
+  Container,
+  Header,
+  Content,
+  Button,
+  Text,
+  Left,
+  Body,
+  Title,
+  Right,
+} from 'native-base';
+
+@inject('userStore')
 export default class SettingsScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Settings',
-  });
+  onSignOut = async () => {
+    await Auth.signOut();
+    this.props.userStore.updateUser(null);
+    this.props.navigation.navigate('Auth');
+  };
 
   render() {
     return (
-      <View>
-        <Button>
-          <Text>Log Out</Text>
-        </Button>
-      </View>
+      <Container>
+        <Header>
+          <Left />
+          <Body>
+            <Title>Settings</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content>
+          <Button full onPress={this.onSignOut}>
+            <Text>Sign Out</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }

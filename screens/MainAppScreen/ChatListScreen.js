@@ -1,87 +1,105 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Text, Button } from 'react-native';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
+import {
+  Content,
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Title,
+  Text,
+} from 'native-base';
+import { inject } from 'mobx-react';
 import Chat from '../../components/Chat';
+import { create } from '../../assets/images';
 
-const ListChats = `
-query list{
-  getUser(id:"f2a01b44-8631-4576-923b-ff13eccf8226") {
-    conversations {
-      items {
-        conversation {
-          messages {
-          	items {
-              content
-            }
-          }
-          id
-          name
-          members 
-        }
-      }
-    }
-  }
-}
-`;
+@inject('userStore')
 export default class ChatsListScreen extends React.Component {
-  static navigationOptions = () => ({
-    title: 'Chats',
-    headerRight: (
-      <Button
-        title="Compose"
-        onPress={() => {
-          console.log('yes');
-        }}
-      />
-    ),
-    headerLeft: (
-      <Button
-        title="Edit"
-        onPress={() => {
-          console.log('yes');
-        }}
-      />
-    ),
-  });
-
   state = {
     chats: [],
   };
 
   async componentDidMount() {
+    const listChat = this.listChats();
     const { chats } = this.state;
-    const chatsData = await API.graphql(graphqlOperation(ListChats));
+    const chatsData = await API.graphql(graphqlOperation(listChat));
     const numberOfChats = chatsData.data.getUser.conversations.items;
     this.setState({ chats: [...numberOfChats, ...chats] });
   }
+
+  listChats = () => {
+    const ListChats = `
+    query list{
+      getUser(id:"${this.props.userStore.user.id}") {
+        conversations {
+          items {
+            conversation {
+              messages {
+                items {
+                  content
+                }
+              }
+              id
+              name
+              members 
+            }
+          }
+        }
+      }
+    }
+    `;
+    return ListChats;
+  };
 
   render() {
     const { chats } = this.state;
     const { container } = styles;
     return (
-      <View style={container}>
-        <ScrollView>
-          {chats.map(el => {
-            const { id, name, messages } = el.conversation;
-            const { items } = messages;
-            console.log(items);
-
-            return (
-              items.length !== 0 && (
-                <Chat
-                  key={id}
-                  conversationName={name}
-                  content={
-                    items[items.length - 1]
-                      ? items[items.length - 1].content
-                      : ''
-                  }
-                />
-              )
-            );
-          })}
-        </ScrollView>
-      </View>
+      <Container>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Text>Edit</Text>
+            </Button>
+          </Left>
+          <Body>
+            <Title>Chats</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Image source={create} style={{ width: 28, height: 28 }} />
+            </Button>
+          </Right>
+        </Header>
+        <Content>
+          <View style={container}>
+            <ScrollView>
+              {chats.map(el => {
+                const { id, name, messages } = el.conversation;
+                const { items } = messages;
+                console.log(items);
+                console.log(el);
+                return (
+                  items.length !== 0 && (
+                    <Chat
+                      key={id}
+                      conversationName={name}
+                      content={
+                        items[items.length - 1]
+                          ? items[items.length - 1].content
+                          : ''
+                      }
+                    />
+                  )
+                );
+              })}
+            </ScrollView>
+          </View>
+        </Content>
+      </Container>
     );
   }
 }
