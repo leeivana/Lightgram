@@ -3,28 +3,22 @@ import { Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { API, graphqlOperation } from 'aws-amplify';
+import { getConvo, basicUserQuery } from '../../src/graphql/queries';
+import { onCreateMessage } from '../../src/graphql/subscriptions';
 
-// mutation to create messages given a certain chatid
-// query for all messages given a certain chatid
-// subscription for new messages in the chat
-
-// replace id with id of specific conversation
-const ListMessages = `
-query list{
-  getConvo(id: "a195a3ad-d953-4fb6-a26b-19ebb94eeaf9"){
-    messages {
-      items{
-        content
-        author{
-          given_name
-        }
-        id
-        authorId
-        createdAt
+const CreateMessage = `
+  mutation($content: String!){
+    createMessage(input: {
+      content: $content
+      authorId: "9c570049-788c-4bfe-93ea-0c645df4af73"
+      messageConversationId: "28ff8871-d4d7-4620-8294-34c3ffa0b8ad"
+    }){
+      authorId content isSent messageConversationId createdAt id
+      author {
+        given_name
       }
     }
   }
-}
 `;
 
 class ChatScreen extends Component {
@@ -34,7 +28,7 @@ class ChatScreen extends Component {
       <Button
         title="Back"
         onPress={() => {
-          navigation.navigate('Chats');
+          navigation.navigate('ChatsListScreen');
         }}
       />
     ),
@@ -46,32 +40,77 @@ class ChatScreen extends Component {
 
   // Updates messages
   async componentDidMount() {
-    const messageData = await API.graphql(graphqlOperation(ListMessages));
+    const newMessageArray = [];
+    const { messages } = this.state;
+    const messageData = await API.graphql(
+      graphqlOperation(getConvo, { id: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad' })
+    );
     const allMessages = messageData.data.getConvo.messages.items;
-    console.log('all messages', allMessages);
-    allMessages.forEach(el => {
-      const { messages } = this.state;
-
-      const newMessage = {
-        _id: el.id,
-        text: el.content,
-        createdAt: el.createdAt,
-        user: {
-          _id: el.authorId,
-          name: el.author.given_name,
+    try {
+      await Promise.all(
+        allMessages.map(async el => {
+          el.isSent = true;
+          const { id, content, createdAt, authorId } = el;
+          const newMessage = {
+            _id: id,
+            text: content,
+            createdAt,
+            user: {
+              _id: authorId,
+              name: '',
+            },
+          };
+          const payload = await API.graphql(
+            graphqlOperation(basicUserQuery, { id: authorId })
+          );
+          const givenName = payload.data.getUser.given_name;
+          newMessage.user.name = givenName;
+          newMessageArray.push(newMessage);
+          newMessageArray.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+        })
+      );
+      this.setState({ messages: newMessageArray });
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      API.graphql(
+        graphqlOperation(onCreateMessage, {
+          messageConversationId: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad',
+        })
+      ).subscribe({
+        next: eventData => {
+          const { id, content, authorId, messageConversationId, createdAt, author } = eventData.value.data.onCreateMessage;
+          const { given_name } = author;
+          const messageObj = {
+            createdAt,
+            _id: id,
+            text: content,
+            user: {
+              _id: authorId,
+              name: given_name,
+            },
+          };
+          const messageArray = [messageObj, ...this.state.messages.filter(i => i._id !== messageObj._id)];
+          this.setState({ messages: messageArray });
         },
-      };
-      this.setState({
-        messages: [newMessage, ...messages],
       });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }));
-  }
+  onSend = async (messages = []) => {
+    if (messages === []) return;
+    const { text } = messages[0];
+    try {
+      await API.graphql(graphqlOperation(CreateMessage, { content: text }));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   render() {
     const { messages } = this.state;
@@ -80,7 +119,8 @@ class ChatScreen extends Component {
         messages={messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: 1,
+          // id of current user
+          _id: '9c570049-788c-4bfe-93ea-0c645df4af73',
         }}
       />
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
-import ChatScreen from '../screens/ChatScreen';
+import ChatScreen from '../screens/MainAppScreen/ChatScreen';
 
 const ChatScreenStack = createStackNavigator({
   Chat: ChatScreen,
