@@ -14,6 +14,9 @@ const CreateMessage = `
       messageConversationId: "28ff8871-d4d7-4620-8294-34c3ffa0b8ad"
     }){
       authorId content isSent messageConversationId createdAt id
+      author {
+        given_name
+      }
     }
   }
 `;
@@ -77,19 +80,18 @@ class ChatScreen extends Component {
       ).subscribe({
         next: eventData => {
           console.log('eventdata', eventData);
-          const { id, content, authorId, messageConversationId, createdAt } = eventData.value.data.onCreateMessage;
-          console.log('eventdata id', id);
+          const { id, content, authorId, messageConversationId, createdAt, author } = eventData.value.data.onCreateMessage;
+          const { given_name } = author;
           const messageObj = {
             createdAt,
             _id: id,
             text: content,
             user: {
               _id: authorId,
-              // need to update name
-              name: '',
+              name: given_name,
             },
           };
-          const messageArray = [...this.state.messages.filter(i => i._id !== messageObj._id), messageObj];
+          const messageArray = [messageObj, ...this.state.messages.filter(i => i._id !== messageObj._id)];
           console.log('message array', messageArray);
           this.setState({ messages: messageArray });
           console.log('state after',this.state.messages);
