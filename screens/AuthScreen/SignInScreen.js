@@ -1,9 +1,19 @@
-import React, { Fragment } from 'react';
-import { View, StyleSheet, TextInput, Button } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Platform,
+  Image,
+} from 'react-native';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
+import { Button } from 'native-base';
+import { logo } from '../../assets/images';
 import { basicUserQuery } from '../../src/graphql/queries';
 import { createUserMutation } from '../../src/graphql/mutations';
+import Block from '../../components/ColorBlock';
 
 @inject('userStore')
 export default class SignIn extends React.Component {
@@ -66,7 +76,7 @@ export default class SignIn extends React.Component {
       // Update user store
       this.props.userStore.updateUser(authenticatedUser.data.getUser);
 
-      this.props.navigation.navigate('Main');
+      this.props.navigation.navigate('About');
       console.log('user successfully confirm sign in!');
     } catch (err) {
       console.log('error confirming sign in: ', err);
@@ -78,38 +88,84 @@ export default class SignIn extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Block style={{ transform: [{ rotate: '-55deg' }] }} />
+        <View style={styles.logoContainer}>
+          <Image source={logo} style={styles.logo} />
+        </View>
         {!showConfirmationForm && (
-          <Fragment>
+          <View>
             <TextInput
               style={styles.input}
               placeholder="Phone number"
               autoCapitalize="none"
               autoCorrect={false}
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('username', val)}
             />
             <TextInput
               style={styles.input}
               placeholder="Password"
               autoCapitalize="none"
+              autoCorrect={false}
               secureTextEntry
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('password', val)}
             />
-            <Button title="Sign In" onPress={this.signIn} />
-          </Fragment>
+            <Button
+              rounded
+              primary
+              block
+              large
+              style={styles.loginBtn}
+              onPress={this.signIn}
+            >
+              <Text
+                style={
+                  Platform.OS === 'android'
+                    ? {
+                        fontSize: 16,
+                        textAlign: 'center',
+                        top: -5,
+                        color: '#fff',
+                      }
+                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                }
+              >
+                Get Started
+              </Text>
+            </Button>
+          </View>
         )}
         {showConfirmationForm && (
-          <Fragment>
+          <View>
             <TextInput
               style={styles.input}
               placeholder="Authentication Code"
               autoCapitalize="none"
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('authenticationCode', val)}
             />
-            <Button title="Confirm Sign In" onPress={this.confirmSignIn} />
-          </Fragment>
+            <Button
+              rounded
+              primary
+              block
+              large
+              style={styles.loginBtn}
+              onPress={this.confirmSignIn}
+            >
+              <Text
+                style={
+                  Platform.OS === 'android'
+                    ? {
+                        fontSize: 16,
+                        textAlign: 'center',
+                        top: -5,
+                        color: '#fff',
+                      }
+                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                }
+              >
+                Confirm
+              </Text>
+            </Button>
+          </View>
         )}
       </View>
     );
@@ -117,20 +173,38 @@ export default class SignIn extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  logo: {
+    width: 300,
+    height: 300,
+  },
+  loginBtn: {
+    height: 50,
+  },
   input: {
-    width: 350,
-    fontSize: 18,
+    height: 50,
     fontWeight: '500',
-    height: 55,
-    backgroundColor: '#42A5F5',
-    margin: 10,
-    color: 'white',
-    padding: 8,
-    borderRadius: 14,
+    marginBottom: 10,
+    borderRadius: 25,
+    fontSize: 16,
+    paddingLeft: 15,
+    paddingHorizontal: 8,
+    backgroundColor: 'white',
+    marginHorizontal: 25,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+      },
+    }),
   },
   container: {
     flex: 1,
     justifyContent: 'center',
+    paddingHorizontal: 30,
+  },
+  logoContainer: {
     alignItems: 'center',
   },
 });

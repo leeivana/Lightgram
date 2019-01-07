@@ -1,7 +1,16 @@
 import React from 'react';
-import { View, Button, TextInput, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Platform,
+  Image,
+} from 'react-native';
+import { Button } from 'native-base';
 
 import { Auth } from 'aws-amplify';
+import Block from '../../components/ColorBlock';
 
 export default class SignUpScreen extends React.Component {
   state = {
@@ -50,20 +59,19 @@ export default class SignUpScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Block style={{ transform: [{ rotate: '-55deg' }] }} />
         {!showConfirmationForm && (
           <View>
             <TextInput
               style={styles.input}
               placeholder="Fist Name"
               autoCapitalize="none"
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('given_name', val)}
             />
             <TextInput
               style={styles.input}
               placeholder="Last Name"
               autoCapitalize="none"
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('family_name', val)}
             />
             <TextInput
@@ -71,17 +79,37 @@ export default class SignUpScreen extends React.Component {
               placeholder="Password"
               secureTextEntry
               autoCapitalize="none"
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('password', val)}
             />
             <TextInput
               style={styles.input}
               placeholder="Phone Number"
               autoCapitalize="none"
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('username', val)}
             />
-            <Button title="Sign Up" onPress={this.signUp} />
+            <Button
+              rounded
+              primary
+              block
+              large
+              style={styles.loginBtn}
+              onPress={this.signUp}
+            >
+              <Text
+                style={
+                  Platform.OS === 'android'
+                    ? {
+                        fontSize: 16,
+                        textAlign: 'center',
+                        top: -5,
+                        color: '#fff',
+                      }
+                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                }
+              >
+                Sign Up
+              </Text>
+            </Button>
           </View>
         )}
         {showConfirmationForm && (
@@ -90,10 +118,31 @@ export default class SignUpScreen extends React.Component {
               style={styles.input}
               placeholder="Authentication code"
               autoCapitalize="none"
-              placeholderTextColor="white"
               onChangeText={val => this.onChangeText('authenticationCode', val)}
             />
-            <Button title="Confirm Sign Up" onPress={this.confirmSignUp} />
+            <Button
+              rounded
+              primary
+              block
+              large
+              style={styles.loginBtn}
+              onPress={this.confirmSignUp}
+            >
+              <Text
+                style={
+                  Platform.OS === 'android'
+                    ? {
+                        fontSize: 16,
+                        textAlign: 'center',
+                        top: -5,
+                        color: '#fff',
+                      }
+                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                }
+              >
+                Confirm
+              </Text>
+            </Button>
           </View>
         )}
       </View>
@@ -101,18 +150,34 @@ export default class SignUpScreen extends React.Component {
   }
 }
 const styles = StyleSheet.create({
+  loginBtn: {
+    height: 50,
+  },
   input: {
-    width: 350,
-    height: 55,
-    backgroundColor: '#42A5F5',
-    margin: 10,
-    padding: 8,
-    color: 'white',
-    borderRadius: 14,
+    height: 50,
+    fontWeight: '500',
+    marginBottom: 10,
+    borderRadius: 25,
+    fontSize: 16,
+    paddingLeft: 15,
+    paddingHorizontal: 8,
+    backgroundColor: 'white',
+    marginHorizontal: 25,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+      },
+    }),
   },
   container: {
     flex: 1,
     justifyContent: 'center',
+    paddingHorizontal: 30,
+  },
+  logoContainer: {
     alignItems: 'center',
   },
 });

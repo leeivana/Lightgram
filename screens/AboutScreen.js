@@ -3,10 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { inject } from 'mobx-react';
-import { basicUserQuery } from '../src/graphql/queries';
-
 const styles = StyleSheet.create({
   buttonCircle: {
     width: 40,
@@ -61,35 +57,13 @@ const slides = [
   },
 ];
 
-@inject('userStore')
-export default class InitializingScreen extends React.Component {
+export default class AboutScreen extends React.Component {
   state = {
-    goToLogin: false,
+    goToMainApp: false,
   };
 
-  async componentDidMount() {
-    try {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      const {
-        signInUserSession: {
-          accessToken: {
-            payload: { sub },
-          },
-        },
-      } = currentUser;
-      const authenticatedUser = await API.graphql(
-        graphqlOperation(basicUserQuery, { id: sub })
-      );
-      this.props.userStore.updateUser(authenticatedUser.data.getUser);
-
-      this.props.navigation.navigate('Main');
-    } catch (err) {
-      console.log('err:', err);
-    }
-  }
-
   _onDone = () => {
-    this.setState({ goToLogin: true });
+    this.setState({ goToMainApp: true });
   };
 
   _renderNextButton = () => (
@@ -115,8 +89,8 @@ export default class InitializingScreen extends React.Component {
   );
 
   render() {
-    if (this.state.goToLogin) {
-      this.props.navigation.navigate('Auth');
+    if (this.state.goToMainApp) {
+      this.props.navigation.navigate('Main');
     }
     return (
       <AppIntroSlider

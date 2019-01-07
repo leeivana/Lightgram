@@ -1,3 +1,5 @@
+const logo = require('./images/logo.png');
+// const logoTitle = require('./images/logoTitle.png');
 const signUp = require('./images/signup.png');
 const signIn = require('./images/signIn.png');
 const contacts = require('./images/contacts.png');
@@ -7,4 +9,15 @@ const search = require('./images/search.png');
 const create = require('./images/create.png');
 const close = require('./images/close.png');
 
-export { signUp, signIn, contacts, chats, settings, search, create, close };
+export {
+  signUp,
+  logo,
+  // logoTitle,
+  signIn,
+  contacts,
+  chats,
+  settings,
+  search,
+  create,
+  close,
+};
