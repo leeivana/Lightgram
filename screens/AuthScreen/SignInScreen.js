@@ -162,7 +162,7 @@ export default class SignIn extends React.Component {
                     : { fontSize: 16, fontWeight: '900', color: '#fff' }
                 }
               >
-                Get Started
+                Confirm
               </Text>
             </Button>
           </View>
@@ -176,9 +176,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 300,
     height: 300,
-  },
-  titleContainer: {
-    flexDirection: 'row',
   },
   loginBtn: {
     height: 50,
