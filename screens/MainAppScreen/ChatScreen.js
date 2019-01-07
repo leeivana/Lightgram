@@ -76,24 +76,23 @@ class ChatScreen extends Component {
         })
       ).subscribe({
         next: eventData => {
-          console.log('state',this.state.messages);
           console.log('eventdata', eventData);
           const { id, content, authorId, messageConversationId, createdAt } = eventData.value.data.onCreateMessage;
+          console.log('eventdata id', id);
           const messageObj = {
             createdAt,
             _id: id,
             text: content,
             user: {
               _id: authorId,
+              // need to update name
               name: '',
             },
           };
-          const messageArray = [
-            ...this.state.messages,
-            messageObj,
-          ];
+          const messageArray = [...this.state.messages.filter(i => i._id !== messageObj._id), messageObj];
           console.log('message array', messageArray);
           this.setState({ messages: messageArray });
+          console.log('state after',this.state.messages);
         },
       });
     } catch (err) {
@@ -104,10 +103,11 @@ class ChatScreen extends Component {
   onSend = async (messages = []) => {
     if (messages === []) return;
     const { text } = messages[0];
+    console.log('message text ', text);
     try {
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, messages),
-      }));
+      // this.setState(previousState => ({
+      //   messages: GiftedChat.append(previousState.messages, messages),
+      // }));
       await API.graphql(graphqlOperation(CreateMessage, { content: text }));
       console.log('message sent');
     } catch (err) {
