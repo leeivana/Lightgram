@@ -33,7 +33,7 @@ export default class ChatsListScreen extends React.Component {
   listChats = () => {
     const ListChats = `
     query list{
-      getUser(id:"${this.props.userStore}") {
+      getUser(id:"${this.props.userStore.user.id}") {
         conversations {
           items {
             conversation {
