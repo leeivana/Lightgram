@@ -3,6 +3,7 @@ import { Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { API, graphqlOperation } from 'aws-amplify';
+import { inject } from 'mobx-react';
 import { getConvo, basicUserQuery } from '../../src/graphql/queries';
 import { onCreateMessage } from '../../src/graphql/subscriptions';
 
@@ -20,7 +21,7 @@ const CreateMessage = `
     }
   }
 `;
-
+@inject('userStore')
 class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: (navigation.state.params || {}).first_name || 'Chat',
@@ -82,7 +83,14 @@ class ChatScreen extends Component {
         })
       ).subscribe({
         next: eventData => {
-          const { id, content, authorId, messageConversationId, createdAt, author } = eventData.value.data.onCreateMessage;
+          const {
+            id,
+            content,
+            authorId,
+            messageConversationId,
+            createdAt,
+            author,
+          } = eventData.value.data.onCreateMessage;
           const { given_name } = author;
           const messageObj = {
             createdAt,
@@ -93,7 +101,10 @@ class ChatScreen extends Component {
               name: given_name,
             },
           };
-          const messageArray = [messageObj, ...this.state.messages.filter(i => i._id !== messageObj._id)];
+          const messageArray = [
+            messageObj,
+            ...this.state.messages.filter(i => i._id !== messageObj._id),
+          ];
           this.setState({ messages: messageArray });
         },
       });
@@ -120,7 +131,7 @@ class ChatScreen extends Component {
         onSend={messages => this.onSend(messages)}
         user={{
           // id of current user
-          _id: '9c570049-788c-4bfe-93ea-0c645df4af73',
+          _id: this.props.userStore.user.id,
         }}
       />
     );

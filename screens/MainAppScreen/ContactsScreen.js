@@ -27,18 +27,6 @@ query list{
   
 `;
 export default class ContactsScreen extends React.Component {
-  static navigationOptions = () => ({
-    title: 'Contacts',
-    headerRight: (
-      <Button
-        title="Compose"
-        onPress={() => {
-          console.log('yes');
-        }}
-      />
-    ),
-  });
-
   state = {
     status: null,
     contacts: [],
@@ -119,6 +107,7 @@ export default class ContactsScreen extends React.Component {
           <Body>
             <Title>Contacts</Title>
           </Body>
+          <Right />
         </Header>
 
         <View style={styles.container}>

@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Login extends React.Component {
+export default class Login extends React.Component {
   state = initialState;
 
   componentDidMount() {
@@ -164,4 +164,3 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
