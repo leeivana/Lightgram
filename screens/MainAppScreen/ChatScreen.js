@@ -11,9 +11,9 @@ const CreateMessage = `
     createMessage(input: {
       content: $content
       authorId: "9c570049-788c-4bfe-93ea-0c645df4af73"
-      messageConversationId: "a195a3ad-d953-4fb6-a26b-19ebb94eeaf9"
+      messageConversationId: "28ff8871-d4d7-4620-8294-34c3ffa0b8ad"
     }){
-      authorId content isSent messageConversationId createdAt
+      authorId content isSent messageConversationId createdAt id
     }
   }
 `;
@@ -43,7 +43,6 @@ class ChatScreen extends Component {
       graphqlOperation(getConvo, { id: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad' })
     );
     const allMessages = messageData.data.getConvo.messages.items;
-    console.log('all messages', allMessages);
     try {
       await Promise.all(
         allMessages.map(async el => {
@@ -70,32 +69,36 @@ class ChatScreen extends Component {
     } catch (e) {
       console.error(e);
     }
-    API.graphql(
-      graphqlOperation(onCreateMessage, {
-        messageConversationId: 'a195a3ad-d953-4fb6-a26b-19ebb94eeaf9',
-      })
-    ).subscribe({
-      next: eventData => {
-        const message = eventData.value.data.onCreateMessage;
-        const { id, content, authorId } = message;
-        console.log(id, content, authorId);
-        const messageObj = {
-          _id: message.id,
-          text: content,
-          user: {
-            _id: authorId,
-          },
-        };
-        const messageArray = [
-          ...this.state.messages.filter(
-            i => i.messageConversationId !== message.messageConversationId
-          ),
-          messageObj,
-        ];
-        console.log('message array', messageArray);
-        this.setState({ messages: messageArray });
-      },
-    });
+    try {
+      API.graphql(
+        graphqlOperation(onCreateMessage, {
+          messageConversationId: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad',
+        })
+      ).subscribe({
+        next: eventData => {
+          console.log('state',this.state.messages);
+          console.log('eventdata', eventData);
+          const { id, content, authorId, messageConversationId, createdAt } = eventData.value.data.onCreateMessage;
+          const messageObj = {
+            createdAt,
+            _id: id,
+            text: content,
+            user: {
+              _id: authorId,
+              name: '',
+            },
+          };
+          const messageArray = [
+            ...this.state.messages,
+            messageObj,
+          ];
+          console.log('message array', messageArray);
+          this.setState({ messages: messageArray });
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   onSend = async (messages = []) => {
@@ -106,9 +109,9 @@ class ChatScreen extends Component {
         messages: GiftedChat.append(previousState.messages, messages),
       }));
       await API.graphql(graphqlOperation(CreateMessage, { content: text }));
-      console.log('success');
+      console.log('message sent');
     } catch (err) {
-      console.log('error', err);
+      console.error(err);
     }
   };
 
