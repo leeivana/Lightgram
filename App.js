@@ -3,8 +3,6 @@ import Amplify, { Auth } from 'aws-amplify';
 import AWSAppSyncClient from 'aws-appsync';
 import { ApolloProvider } from 'react-apollo';
 import AppNavigator from './navigation/AppNavigator';
-import MainAppNavigator from './navigation/MainAppNavigator';
-import ChatScreenStack from './navigation/ChatNavigator';
 import Provider from './src/mobx';
 import awsconfig from './aws-exports';
 
