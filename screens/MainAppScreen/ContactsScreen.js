@@ -1,7 +1,17 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, View, Linking } from 'react-native';
+import { ScrollView, StyleSheet, View, Linking } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Permissions, Contacts } from 'expo';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Title,
+  Text,
+} from 'native-base';
 import ContactList from '../../components/ContactList';
 
 const listUsers = `
@@ -99,11 +109,24 @@ export default class ContactsScreen extends React.Component {
     const formatNumber = this.formatPhoneNumber();
 
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          <ContactList allContacts={this.getFriendsWithApp(formatNumber)} />
-        </ScrollView>
-      </View>
+      <Container>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Text>Edit</Text>
+            </Button>
+          </Left>
+          <Body>
+            <Title>Contacts</Title>
+          </Body>
+        </Header>
+
+        <View style={styles.container}>
+          <ScrollView>
+            <ContactList allContacts={this.getFriendsWithApp(formatNumber)} />
+          </ScrollView>
+        </View>
+      </Container>
     );
   }
 }

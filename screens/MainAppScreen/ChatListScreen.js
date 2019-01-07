@@ -9,44 +9,50 @@ import {
   Body,
   Right,
   Button,
-  Icon,
   Title,
   Text,
 } from 'native-base';
+import { inject } from 'mobx-react';
 import Chat from '../../components/Chat';
 import { create } from '../../assets/images';
 
-const ListChats = `
-query list{
-  getUser(id:"1bb5da27-3471-475f-8968-a43c4403f8c5") {
-    conversations {
-      items {
-        conversation {
-          messages {
-          	items {
-              content
-            }
-          }
-          id
-          name
-          members 
-        }
-      }
-    }
-  }
-}
-`;
+@inject('userStore')
 export default class ChatsListScreen extends React.Component {
   state = {
     chats: [],
   };
 
   async componentDidMount() {
+    const listChat = this.listChats();
     const { chats } = this.state;
-    const chatsData = await API.graphql(graphqlOperation(ListChats));
+    const chatsData = await API.graphql(graphqlOperation(listChat));
     const numberOfChats = chatsData.data.getUser.conversations.items;
     this.setState({ chats: [...numberOfChats, ...chats] });
   }
+
+  listChats = () => {
+    const ListChats = `
+    query list{
+      getUser(id:"${this.props.userStore}") {
+        conversations {
+          items {
+            conversation {
+              messages {
+                items {
+                  content
+                }
+              }
+              id
+              name
+              members 
+            }
+          }
+        }
+      }
+    }
+    `;
+    return ListChats;
+  };
 
   render() {
     const { chats } = this.state;
@@ -75,7 +81,7 @@ export default class ChatsListScreen extends React.Component {
                 const { id, name, messages } = el.conversation;
                 const { items } = messages;
                 console.log(items);
-
+                console.log(el);
                 return (
                   items.length !== 0 && (
                     <Chat
