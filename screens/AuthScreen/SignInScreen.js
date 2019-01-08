@@ -97,6 +97,7 @@ export default class SignIn extends React.Component {
             <TextInput
               style={styles.input}
               placeholder="Phone number"
+              keyboardType="phone-pad"
               autoCapitalize="none"
               autoCorrect={false}
               onChangeText={val => this.onChangeText('username', val)}
