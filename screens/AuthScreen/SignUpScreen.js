@@ -6,6 +6,7 @@ import {
   TextInput,
   Platform,
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Button } from 'native-base';
 
@@ -59,92 +60,96 @@ export default class SignUpScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Block style={{ transform: [{ rotate: '-55deg' }] }} />
-        {!showConfirmationForm && (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder="Fist Name"
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('given_name', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Last Name"
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('family_name', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              secureTextEntry
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('password', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('username', val)}
-            />
-            <Button
-              rounded
-              primary
-              block
-              large
-              style={styles.loginBtn}
-              onPress={this.signUp}
-            >
-              <Text
-                style={
-                  Platform.OS === 'android'
-                    ? {
-                        fontSize: 16,
-                        textAlign: 'center',
-                        top: -5,
-                        color: '#fff',
-                      }
-                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
-                }
+        <KeyboardAvoidingView behavior="padding">
+          <Block style={{ transform: [{ rotate: '-55deg' }] }} />
+          {!showConfirmationForm && (
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="First Name"
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('given_name', val)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Last Name"
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('family_name', val)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                secureTextEntry
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('password', val)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Phone Number"
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('username', val)}
+              />
+              <Button
+                rounded
+                primary
+                block
+                large
+                style={styles.loginBtn}
+                onPress={this.signUp}
               >
-                Sign Up
-              </Text>
-            </Button>
-          </View>
-        )}
-        {showConfirmationForm && (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder="Authentication code"
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('authenticationCode', val)}
-            />
-            <Button
-              rounded
-              primary
-              block
-              large
-              style={styles.loginBtn}
-              onPress={this.confirmSignUp}
-            >
-              <Text
-                style={
-                  Platform.OS === 'android'
-                    ? {
-                        fontSize: 16,
-                        textAlign: 'center',
-                        top: -5,
-                        color: '#fff',
-                      }
-                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                <Text
+                  style={
+                    Platform.OS === 'android'
+                      ? {
+                          fontSize: 16,
+                          textAlign: 'center',
+                          top: -5,
+                          color: '#fff',
+                        }
+                      : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                  }
+                >
+                  Sign Up
+                </Text>
+              </Button>
+            </View>
+          )}
+          {showConfirmationForm && (
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="Authentication code"
+                autoCapitalize="none"
+                onChangeText={val =>
+                  this.onChangeText('authenticationCode', val)
                 }
+              />
+              <Button
+                rounded
+                primary
+                block
+                large
+                style={styles.loginBtn}
+                onPress={this.confirmSignUp}
               >
-                Confirm
-              </Text>
-            </Button>
-          </View>
-        )}
+                <Text
+                  style={
+                    Platform.OS === 'android'
+                      ? {
+                          fontSize: 16,
+                          textAlign: 'center',
+                          top: -5,
+                          color: '#fff',
+                        }
+                      : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                  }
+                >
+                  Confirm
+                </Text>
+              </Button>
+            </View>
+          )}
+        </KeyboardAvoidingView>
       </View>
     );
   }
