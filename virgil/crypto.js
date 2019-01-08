@@ -11,3 +11,5 @@ const cardManager = new CardManager({
   accessTokenProvider,
   cardVerifier,
 });
+
+export default cardManager;

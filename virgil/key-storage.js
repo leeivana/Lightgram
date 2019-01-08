@@ -1,40 +1,54 @@
 import { VirgilCrypto, VirgilCryptoPrivateKeyExporter } from 'virgil-crypto';
 import { PrivateKeyStorage } from 'virgil-sdk';
+import cardManager from './crypto';
 
-// initialize Virgil Crypto library
-const virgilCrypto = new VirgilCrypto();
-const privateKeyExporter = new VirgilCryptoPrivateKeyExporter(
-  virgilCrypto,
-  // if provided, will be used to encrypt the key bytes before exporting
-  // and decrypt before importing.
-  '[OPTIONAL_PASSWORD_TO_ENCRYPT_THE_KEYS_WITH]'
-);
+const createKeys = phoneNumber => {
+  // initialize Virgil Crypto library
+  const virgilCrypto = new VirgilCrypto();
+  const privateKeyExporter = new VirgilCryptoPrivateKeyExporter(
+    virgilCrypto,
+    // if provided, will be used to encrypt the key bytes before exporting
+    // and decrypt before importing.
+    '[OPTIONAL_PASSWORD_TO_ENCRYPT_THE_KEYS_WITH]'
+  );
 
-// Generate a private key
-const keyPair = virgilCrypto.generateKeys();
+  // Generate a private key
+  const keyPair = virgilCrypto.generateKeys();
 
-const privateKeyStorage = new PrivateKeyStorage(privateKeyExporter);
+  const privateKeyStorage = new PrivateKeyStorage(privateKeyExporter);
 
-// Store the private key with optional metadata (i.e. the PrivateKeyEntry)
-privateKeyStorage
-  .save('my private key', keyPair.privateKey, { optional: 'data' })
-  .then(() => {
-    // Load the private key entry
-    privateKeyStorage.load('my private key').then(privateKeyEntry => {
-      if (privateKeyEntry === null) {
-        return;
-      }
+  // Store the private key with optional metadata (i.e. the PrivateKeyEntry)
+  privateKeyStorage
+    .save(phoneNumber, keyPair.privateKey, { optional: 'data' })
+    .then(() => {
+      // Load the private key entry
 
-      console.log(privateKeyEntry.privateKey); // VirgilPrivateKey instance
-      console.log(privateKeyEntry.meta); // { optional: 'data' }
+      cardManager
+        .publishCard({
+          privateKey: keyPair.privateKey,
+          publicKey: keyPair.publicKey,
+        })
+        .then(card => {
+          console.log('Card is published with ID: ', card.id);
+        });
+      privateKeyStorage.load(phoneNumber).then(privateKeyEntry => {
+        if (privateKeyEntry === null) {
+          return;
+        }
 
-      const privateKey = privateKeyEntry.privateKey;
+        console.log(privateKeyEntry.privateKey); // VirgilPrivateKey instance
+        console.log(privateKeyEntry.meta); // { optional: 'data' }
 
-      // Use the privateKey in virgilCrypto operations
+        const privateKey = privateKeyEntry.privateKey;
 
-      // Delete a private key
-      privateKeyStorage.delete('my private key').then(() => {
-        console.log('Private key has been removed');
+        // Use the privateKey in virgilCrypto operations
+
+        // Delete a private key
+        privateKeyStorage.delete(phoneNumber).then(() => {
+          console.log('Private key has been removed');
+        });
       });
     });
-  });
+};
+
+export default createKeys;

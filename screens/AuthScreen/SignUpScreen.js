@@ -8,8 +8,8 @@ import {
   Image,
 } from 'react-native';
 import { Button } from 'native-base';
-
 import { Auth } from 'aws-amplify';
+import createKeys from '../../virgil/key-storage';
 import Block from '../../components/ColorBlock';
 
 export default class SignUpScreen extends React.Component {
@@ -27,6 +27,14 @@ export default class SignUpScreen extends React.Component {
   };
 
   signUp = async () => {
+    const virgilCrypto = new VirgilCrypto();
+    const privateKeyExporter = new VirgilCryptoPrivateKeyExporter(
+      virgilCrypto,
+      // if provided, will be used to encrypt the key bytes before exporting
+      // and decrypt before importing.
+      '[OPTIONAL_PASSWORD_TO_ENCRYPT_THE_KEYS_WITH]'
+    );
+
     const { given_name, family_name, password, username } = this.state;
     try {
       const success = await Auth.signUp({
@@ -34,6 +42,9 @@ export default class SignUpScreen extends React.Component {
         password,
         attributes: { phone_number: username, given_name, family_name },
       });
+      // generate a key pair & save to privateKeyStorage
+      createKeys(username);
+
       console.log('user successfully signed up!: ', success);
       this.setState({ showConfirmationForm: true });
     } catch (err) {
