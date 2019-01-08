@@ -6,6 +6,7 @@ import {
   TextInput,
   Platform,
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
@@ -19,7 +20,7 @@ import Block from '../../components/ColorBlock';
 export default class SignIn extends React.Component {
   state = {
     user: {},
-    username: '',
+    username: '+1',
     password: '',
     authenticationCode: '',
     showConfirmationForm: false,
@@ -88,86 +89,92 @@ export default class SignIn extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Block style={{ transform: [{ rotate: '-55deg' }] }} />
-        <View style={styles.logoContainer}>
-          <Image source={logo} style={styles.logo} />
-        </View>
-        {!showConfirmationForm && (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder="Phone number"
-              keyboardType="phone-pad"
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={val => this.onChangeText('username', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry
-              onChangeText={val => this.onChangeText('password', val)}
-            />
-            <Button
-              rounded
-              primary
-              block
-              large
-              style={styles.loginBtn}
-              onPress={this.signIn}
-            >
-              <Text
-                style={
-                  Platform.OS === 'android'
-                    ? {
-                        fontSize: 16,
-                        textAlign: 'center',
-                        top: -5,
-                        color: '#fff',
-                      }
-                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
-                }
-              >
-                Get Started
-              </Text>
-            </Button>
+        <KeyboardAvoidingView behavior="padding">
+          <Block style={{ transform: [{ rotate: '-55deg' }] }} />
+          <View style={styles.logoContainer}>
+            <Image source={logo} style={styles.logo} />
           </View>
-        )}
-        {showConfirmationForm && (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder="Authentication Code"
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('authenticationCode', val)}
-            />
-            <Button
-              rounded
-              primary
-              block
-              large
-              style={styles.loginBtn}
-              onPress={this.confirmSignIn}
-            >
-              <Text
-                style={
-                  Platform.OS === 'android'
-                    ? {
-                        fontSize: 16,
-                        textAlign: 'center',
-                        top: -5,
-                        color: '#fff',
-                      }
-                    : { fontSize: 16, fontWeight: '900', color: '#fff' }
-                }
+          {!showConfirmationForm && (
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="Phone number"
+                value={this.state.username}
+                keyboardType="phone-pad"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={val => this.onChangeText('username', val)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                secureTextEntry
+                onChangeText={val => this.onChangeText('password', val)}
+              />
+              <Button
+                rounded
+                primary
+                block
+                large
+                style={styles.loginBtn}
+                onPress={this.signIn}
               >
-                Confirm
-              </Text>
-            </Button>
-          </View>
-        )}
+                <Text
+                  style={
+                    Platform.OS === 'android'
+                      ? {
+                          fontSize: 16,
+                          textAlign: 'center',
+                          top: -5,
+                          color: '#fff',
+                        }
+                      : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                  }
+                >
+                  Get Started
+                </Text>
+              </Button>
+            </View>
+          )}
+          {showConfirmationForm && (
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="Authentication Code"
+                autoCapitalize="none"
+                onChangeText={val =>
+                  this.onChangeText('authenticationCode', val)
+                }
+                keyboardType="phone-pad"
+              />
+              <Button
+                rounded
+                primary
+                block
+                large
+                style={styles.loginBtn}
+                onPress={this.confirmSignIn}
+              >
+                <Text
+                  style={
+                    Platform.OS === 'android'
+                      ? {
+                          fontSize: 16,
+                          textAlign: 'center',
+                          top: -5,
+                          color: '#fff',
+                        }
+                      : { fontSize: 16, fontWeight: '900', color: '#fff' }
+                  }
+                >
+                  Confirm
+                </Text>
+              </Button>
+            </View>
+          )}
+        </KeyboardAvoidingView>
       </View>
     );
   }
