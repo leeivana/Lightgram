@@ -7,20 +7,6 @@ import { inject } from 'mobx-react';
 import { getConvo, basicUserQuery } from '../../src/graphql/queries';
 import { onCreateMessage } from '../../src/graphql/subscriptions';
 
-const CreateMessage = `
-  mutation($content: String!){
-    createMessage(input: {
-      content: $content
-      authorId: "9c570049-788c-4bfe-93ea-0c645df4af73"
-      messageConversationId: "28ff8871-d4d7-4620-8294-34c3ffa0b8ad"
-    }){
-      authorId content isSent messageConversationId createdAt id
-      author {
-        given_name
-      }
-    }
-  }
-`;
 @inject('userStore')
 class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -44,7 +30,7 @@ class ChatScreen extends Component {
     const newMessageArray = [];
     const { messages } = this.state;
     const messageData = await API.graphql(
-      graphqlOperation(getConvo, { id: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad' })
+      graphqlOperation(getConvo, { id: '710c6c0a-248f-4cd1-9a54-f92ba2ad5818' })
     );
     const allMessages = messageData.data.getConvo.messages.items;
     try {
@@ -79,7 +65,7 @@ class ChatScreen extends Component {
     try {
       API.graphql(
         graphqlOperation(onCreateMessage, {
-          messageConversationId: '28ff8871-d4d7-4620-8294-34c3ffa0b8ad',
+          messageConversationId: '710c6c0a-248f-4cd1-9a54-f92ba2ad5818',
         })
       ).subscribe({
         next: eventData => {
@@ -113,11 +99,33 @@ class ChatScreen extends Component {
     }
   }
 
+  createMessage = () => {
+    const CreateMessage = `
+  mutation($content: String!){
+    createMessage(input: {
+      content: $content
+      authorId: "${this.props.userStore.user.id}"
+      messageConversationId: "710c6c0a-248f-4cd1-9a54-f92ba2ad5818"
+    }){
+      authorId content isSent messageConversationId createdAt id
+      author {
+        given_name
+    }
+  }
+}
+`;
+    return CreateMessage;
+  };
+
   onSend = async (messages = []) => {
     if (messages === []) return;
     const { text } = messages[0];
+    console.log(text);
     try {
-      await API.graphql(graphqlOperation(CreateMessage, { content: text }));
+      await API.graphql(
+        graphqlOperation(this.createMessage(), { content: text })
+      );
+      console.log('sent');
     } catch (err) {
       console.error(err);
     }
