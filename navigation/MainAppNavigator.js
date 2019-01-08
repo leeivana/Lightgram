@@ -12,7 +12,7 @@ import SettingsScreen from '../screens/MainAppScreen/SettingsScreen';
 import { contacts, chats, settings } from '../assets/images';
 
 const Tabs = {
-  ContactsScreen: {
+  Contacts: {
     screen: ContactsScreen,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
@@ -20,7 +20,7 @@ const Tabs = {
       ),
     }),
   },
-  ChatsListScreen: {
+  Chats: {
     screen: ChatsListScreen,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
@@ -28,7 +28,7 @@ const Tabs = {
       ),
     }),
   },
-  SettingsScreen: {
+  Settings: {
     screen: SettingsScreen,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (

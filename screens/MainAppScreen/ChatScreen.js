@@ -29,7 +29,7 @@ class ChatScreen extends Component {
       <Button
         title="Back"
         onPress={() => {
-          navigation.navigate('ChatsListScreen');
+          navigation.navigate('Chats');
         }}
       />
     ),
