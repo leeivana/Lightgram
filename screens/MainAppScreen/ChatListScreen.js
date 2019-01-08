@@ -71,7 +71,7 @@ export default class ChatsListScreen extends React.Component {
           <Right>
             <Button transparent>
               <Image
-                source="https://api.adorable.io/avatars/285/abott@adorable.png"
+                // source="https://api.adorable.io/avatars/285/abott@adorable.png"
                 style={{ width: 28, height: 28 }}
               />
             </Button>
