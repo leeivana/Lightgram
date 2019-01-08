@@ -1,5 +1,3 @@
-// client.js
-
 import { CachingJwtProvider } from 'virgil-sdk';
 
 const fetchJwt = () =>
