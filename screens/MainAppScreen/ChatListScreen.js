@@ -70,10 +70,7 @@ export default class ChatsListScreen extends React.Component {
           </Body>
           <Right>
             <Button transparent>
-              <Image
-                // source="https://api.adorable.io/avatars/285/abott@adorable.png"
-                style={{ width: 28, height: 28 }}
-              />
+              <Image style={{ width: 28, height: 28 }} />
             </Button>
           </Right>
         </Header>
