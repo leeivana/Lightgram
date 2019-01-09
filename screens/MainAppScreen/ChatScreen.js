@@ -6,6 +6,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
 import { getConvo, basicUserQuery } from '../../src/graphql/queries';
 import { onCreateMessage } from '../../src/graphql/subscriptions';
+import { createConvo } from '../../src/graphql/mutations';
 
 // MOCK DATA:
 // arg Object {
@@ -43,7 +44,6 @@ class ChatScreen extends Component {
     allConversations.forEach(el => {
       if(el.conversations.items.length > 0){
         el.conversations.items.forEach(item => {
-          console.log(item.conversation);
           if(item.conversation.members.includes(this.props.userStore.user.phone_number)){
             this.setState({
               conversationId: item.conversation.id,
