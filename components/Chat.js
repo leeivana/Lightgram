@@ -21,7 +21,13 @@ const Chats = ({ conversationName, time, content, src, navigation }) => {
       }}
     >
       <View style={container}>
-        <Image source={{ src }} style={imageStyle} resizeMode="contain" />
+        <Image
+          source={{
+            uri: `https://api.adorable.io/avatars/100/${conversationName}.png`,
+          }}
+          style={imageStyle}
+          resizeMode="contain"
+        />
         <View>
           <View style={headerContentStyle}>
             <Text style={headerTextStyle}>{conversationName}</Text>
