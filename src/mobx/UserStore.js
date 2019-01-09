@@ -16,7 +16,6 @@ export default class UserStore {
   }
 
   @action updateContact(contact) {
-    console.log('updated contact mobx');
     this.contact = contact;
   }
 }

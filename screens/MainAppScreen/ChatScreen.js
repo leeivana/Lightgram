@@ -6,14 +6,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
 import { getConvo, basicUserQuery } from '../../src/graphql/queries';
 import { onCreateMessage } from '../../src/graphql/subscriptions';
-import { createConvo } from '../../src/graphql/mutations';
-
-// MOCK DATA:
-// arg Object {
-//   "given_name": "Joe",
-//   "last_name": undefined,
-//   "phone_number": "+16479193668",
-// }
+import { CreateConvoLink } from '../../src/graphql/mutations'; 
 
 @inject('userStore')
 class ChatScreen extends Component {
@@ -39,9 +32,9 @@ class ChatScreen extends Component {
     const newMessageArray = [];
     const { messages } = this.state;
     const listConvos = await API.graphql(graphqlOperation(this.listUsers()));
-    // console.log('user id ', listConvos.data.listUsers.items);
+
     const allConversations = listConvos.data.listUsers.items;
-    allConversations.forEach(el => {
+    allConversations.map(async el => {
       if(el.conversations.items.length > 0){
         el.conversations.items.forEach(item => {
           if(item.conversation.members.includes(this.props.userStore.user.phone_number)){
@@ -50,13 +43,22 @@ class ChatScreen extends Component {
             });
           }
         });
+      } else {
+        const conversationData = await API.graphql(graphqlOperation(this.createConvo()));
+        const convoId = conversationData.data.createConvo.id;
+        this.setState({
+          conversationId: convoId,
+        });
+        console.log(this.props.userStore.user.id);
+        const user1 = await API.graphql(graphqlOperation(this.createConvoLink(this.props.userStore.user.id, convoId))); 
+        // const user2 = await API.graphql(graphqlOperation(this.createConvoLink(convoId)));
+        console.log('exists');
       }
     });
 
     const messageData = await API.graphql(
       graphqlOperation(getConvo, { id: this.state.conversationId })
     );
-
     const allMessages = messageData.data.getConvo.messages.items;
     try {
       await Promise.all(
@@ -123,6 +125,40 @@ class ChatScreen extends Component {
       console.error(err);
     }
   }
+
+  createConvo = () => {
+    const CreateConvo = `
+    mutation CreateConvo{
+      createConvo(input: {
+        name: "${this.props.userStore.contact.given_name}"
+        members: ["${this.props.userStore.user.phone_number}", "${this.props.userStore.contact.phone_number}"]
+        isEncrypted: false
+      }) {
+        id
+        name
+        members
+        isEncrypted
+      }
+    }
+    `;
+    return CreateConvo;
+  }
+
+  createConvoLink = (userId, convoId) => {
+    const createConvoLink = `
+    mutation CreateConvoLink{
+      createConvoLink(input: {
+        convoLinkUserId: "${userId}"
+        convoLinkConversationId: "${convoId}"
+      }){
+        id
+        convoLinkUserId
+        convoLinkConversationId
+      }
+    }
+    `;
+    return createConvoLink;
+  };
 
   createMessage = () => {
     const CreateMessage = `
