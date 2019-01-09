@@ -46,49 +46,18 @@ class ChatScreen extends Component {
       } else {
         const conversationData = await API.graphql(graphqlOperation(this.createConvo()));
         const convoId = conversationData.data.createConvo.id;
+        const contactId = listConvos.data.listUsers.items[0].id;
         this.setState({
           conversationId: convoId,
         });
         console.log(this.props.userStore.user.id);
         const user1 = await API.graphql(graphqlOperation(this.createConvoLink(this.props.userStore.user.id, convoId))); 
+        const user2 = await API.graphql(graphqlOperation(this.createConvoLink(contactId, convoId))); 
         // const user2 = await API.graphql(graphqlOperation(this.createConvoLink(convoId)));
         console.log('exists');
       }
     });
 
-    const messageData = await API.graphql(
-      graphqlOperation(getConvo, { id: this.state.conversationId })
-    );
-    const allMessages = messageData.data.getConvo.messages.items;
-    try {
-      await Promise.all(
-        allMessages.map(async el => {
-          el.isSent = true;
-          const { id, content, createdAt, authorId } = el;
-          const newMessage = {
-            _id: id,
-            text: content,
-            createdAt,
-            user: {
-              _id: authorId,
-              name: '',
-            },
-          };
-          const payload = await API.graphql(
-            graphqlOperation(basicUserQuery, { id: authorId })
-          );
-          const givenName = payload.data.getUser.given_name;
-          newMessage.user.name = givenName;
-          newMessageArray.push(newMessage);
-          newMessageArray.sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          );
-        })
-      );
-      this.setState({ messages: newMessageArray });
-    } catch (e) {
-      console.error(e);
-    }
     try {
       API.graphql(
         graphqlOperation(onCreateMessage, {
@@ -123,6 +92,40 @@ class ChatScreen extends Component {
       });
     } catch (err) {
       console.error(err);
+    }
+
+    const messageData = await API.graphql(
+      graphqlOperation(getConvo, { id: this.state.conversationId })
+    );
+    const allMessages = messageData.data.getConvo.messages.items;
+    try {
+      await Promise.all(
+        allMessages.map(async el => {
+          el.isSent = true;
+          const { id, content, createdAt, authorId } = el;
+          const newMessage = {
+            _id: id,
+            text: content,
+            createdAt,
+            user: {
+              _id: authorId,
+              name: '',
+            },
+          };
+          const payload = await API.graphql(
+            graphqlOperation(basicUserQuery, { id: authorId })
+          );
+          const givenName = payload.data.getUser.given_name;
+          newMessage.user.name = givenName;
+          newMessageArray.push(newMessage);
+          newMessageArray.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+        })
+      );
+      this.setState({ messages: newMessageArray });
+    } catch (e) {
+      console.error(e);
     }
   }
 
