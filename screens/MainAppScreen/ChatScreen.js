@@ -7,10 +7,17 @@ import { inject } from 'mobx-react';
 import { getConvo, basicUserQuery } from '../../src/graphql/queries';
 import { onCreateMessage } from '../../src/graphql/subscriptions';
 
+// MOCK DATA:
+// arg Object {
+//   "given_name": "Joe",
+//   "last_name": undefined,
+//   "phone_number": "+16479193668",
+// }
+
 @inject('userStore')
 class ChatScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: (navigation.state.params || {}).first_name || 'Chat',
+    title: (navigation.state.params || {}).title || 'Chat',
     headerLeft: (
       <Button
         title="Back"
@@ -23,15 +30,33 @@ class ChatScreen extends Component {
 
   state = {
     messages: [],
+    conversationId: '',
   };
 
   // Updates messages
   async componentDidMount() {
     const newMessageArray = [];
     const { messages } = this.state;
+    const listConvos = await API.graphql(graphqlOperation(this.listUsers()));
+    // console.log('user id ', listConvos.data.listUsers.items);
+    const allConversations = listConvos.data.listUsers.items;
+    allConversations.forEach(el => {
+      if(el.conversations.items.length > 0){
+        el.conversations.items.forEach(item => {
+          console.log(item.conversation);
+          if(item.conversation.members.includes(this.props.userStore.user.phone_number)){
+            this.setState({
+              conversationId: item.conversation.id,
+            });
+          }
+        });
+      }
+    });
+
     const messageData = await API.graphql(
-      graphqlOperation(getConvo, { id: '710c6c0a-248f-4cd1-9a54-f92ba2ad5818' })
+      graphqlOperation(getConvo, { id: this.state.conversationId })
     );
+
     const allMessages = messageData.data.getConvo.messages.items;
     try {
       await Promise.all(
@@ -65,7 +90,7 @@ class ChatScreen extends Component {
     try {
       API.graphql(
         graphqlOperation(onCreateMessage, {
-          messageConversationId: '710c6c0a-248f-4cd1-9a54-f92ba2ad5818',
+          messageConversationId: this.state.conversationId,
         })
       ).subscribe({
         next: eventData => {
@@ -101,20 +126,45 @@ class ChatScreen extends Component {
 
   createMessage = () => {
     const CreateMessage = `
-  mutation($content: String!){
-    createMessage(input: {
-      content: $content
-      authorId: "${this.props.userStore.user.id}"
-      messageConversationId: "710c6c0a-248f-4cd1-9a54-f92ba2ad5818"
-    }){
-      authorId content isSent messageConversationId createdAt id
-      author {
-        given_name
+      mutation($content: String!){
+        createMessage(input: {
+          content: $content
+          authorId: "${this.props.userStore.user.id}"
+          messageConversationId: "${this.state.conversationId}"
+        }){
+          authorId content isSent messageConversationId createdAt id
+          author {
+            given_name
+        }
+      }
     }
-  }
-}
-`;
+    `;
     return CreateMessage;
+  };
+
+  listUsers = () => {
+    const GetConvos = `
+    query list{
+      listUsers(filter: {
+        phone_number: {
+          contains: "${this.props.userStore.contact.phone_number}"
+        }
+      }){
+        items {
+          id
+          conversations {
+            items {
+              conversation{
+                members
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+    `;
+    return GetConvos;
   };
 
   onSend = async (messages = []) => {
