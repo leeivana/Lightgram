@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { inject } from 'mobx-react';
 
-const Chats = ({ conversationName, time, content, src, navigation }) => {
+@inject('userStore')
+class Chats extends Component {
+
+  render(){
+  const { conversationName, time, content, src, navigation, members, onPress } = this.props; 
   const {
     container,
     imageStyle,
@@ -15,10 +20,7 @@ const Chats = ({ conversationName, time, content, src, navigation }) => {
   } = styles;
   return (
     <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('Chat');
-        console.log('pressed');
-      }}
+        onPress={onPress}
     >
       <View style={container}>
         <Image
@@ -34,12 +36,6 @@ const Chats = ({ conversationName, time, content, src, navigation }) => {
             <Text style={timeStyle}>{time}</Text>
           </View>
           <View style={msgWrapper}>
-            {/* <Icon
-              name="done-all"
-              size={15}
-              color="#7dd5df"
-              style={{ marginLeft: 15, marginRight: 5 }}
-            /> */}
             <Text numberOfLines={1} style={msgContent}>
               {content}
             </Text>
@@ -48,7 +44,8 @@ const Chats = ({ conversationName, time, content, src, navigation }) => {
       </View>
     </TouchableOpacity>
   );
-};
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

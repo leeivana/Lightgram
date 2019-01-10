@@ -30,6 +30,15 @@ export default class ChatsListScreen extends React.Component {
     this.setState({ chats: [...numberOfChats, ...chats] });
   }
 
+  renderItem = async arg => {
+    try {
+      await this.props.userStore.updateContact(arg);
+      this.props.navigation.navigate('Chat');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   listChats = () => {
     const ListChats = `
     query list{
@@ -78,15 +87,18 @@ export default class ChatsListScreen extends React.Component {
           <View style={container}>
             <ScrollView>
               {chats.map(el => {
-                const { id, name, messages } = el.conversation;
+                const { id, name, messages, members } = el.conversation;
                 const { items } = messages;
-                console.log(items);
-                console.log(el);
                 return (
                   items.length !== 0 && (
                     <Chat
                       key={id}
                       conversationName={name}
+                      members={members}
+                      onPress={()=> {
+                        const phoneNumber = members.filter(el => el !== this.props.userStore.user.phone_number);
+                        this.renderItem({ phone_number: phoneNumber[0] });
+                      }}
                       content={
                         items[items.length - 1]
                           ? items[items.length - 1].content
