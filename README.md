@@ -33,7 +33,7 @@ Lightgram is IOS messaging app which uses end to end encryption for messages.
 
 # Screenshots
 ### Auth Screen
-<img src="https://github.com/serhii12/Lightgram/blob/master/docs/signIn.png" width="400" height="400"/>
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/signIn.png" width="400" height="100%"/>
 <img src="https://github.com/serhii12/Lightgram/blob/master/docs/signUp.png" width="400" height="400"/>
 <img src="https://github.com/serhii12/Lightgram/blob/master/docs/confirmSignIn&confirmSignUp.png" width="400" height="400"/>
 
