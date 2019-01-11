@@ -30,3 +30,26 @@ Lightgram is IOS messaging app which uses end to end encryption for messages.
     Virgil
   </li>
 </ul>
+
+# Screenshots
+### Auth Screen
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/signIn.png"/>
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/signUp.png"/>
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/confirmSignIn&confirmSignUp.png"/>
+
+### Landing Screen
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/landinPageOne.png"/>
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/landinPageTwo.png"/>
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/landinPageThree.png"/>
+
+### Contact List Screen
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/contactList.png"/>
+
+### Chat List Screen
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/chatList.png"/>
+
+### Inside Chat Screen
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/chat.png"/>
+
+### Settings
+<img src="https://github.com/serhii12/Lightgram/blob/master/docs/settings.png"/>
