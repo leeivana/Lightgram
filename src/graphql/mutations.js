@@ -80,13 +80,11 @@ export const createConvo = `mutation CreateConvo($input: CreateConversationInput
   }
 }
 `;
-
 const assertErrors = response => {
   if (response && response.errors && response.errors.length > 0) {
     throw new Error(response.errors.join('\n'));
   }
 };
-
 export const createFullConvo = async (user1, user2) => {
   console.log('arguments', user1, user2);
   try {
@@ -125,7 +123,6 @@ export const createFullConvo = async (user1, user2) => {
     console.log(`error ${e}`);
   }
 };
-
 export const createMessage = `mutation CreateMessage($input: CreateMessageInput!) {
   createMessage(input: $input) {
     id
@@ -286,7 +283,6 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateConvoLink
   }
 }
 `;
-
 export const CreateConvoLink = `
 mutation CreateConvoLink($input: CreateConvoLinkInput!) {
   createConvoLink(input: $input) {
@@ -300,7 +296,6 @@ mutation CreateConvoLink($input: CreateConvoLinkInput!) {
   }
 }
 `;
-
 export const CreateConvo = `
 mutation CreateConvo($input: CreateConversationInput!) {
   createConvo(input: $input) {

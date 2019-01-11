@@ -21,7 +21,6 @@ class ContactList extends Component {
   //   const { setParams } = this.props.navigation;
   //   setParams({ title: titleText });
   // };
-
   render() {
     const { allContacts } = this.props;
     const list = () => {
@@ -48,7 +47,6 @@ class ContactList extends Component {
                   size={75}
                 />
               </View>
-
               <View>
                 <View
                   style={{
@@ -79,5 +77,4 @@ class ContactList extends Component {
     );
   }
 }
-
 export default withNavigation(ContactList);

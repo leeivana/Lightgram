@@ -15,7 +15,6 @@ import {
 import { inject } from 'mobx-react';
 import Chat from '../../components/Chat';
 import { create } from '../../assets/images';
-
 @inject('userStore')
 export default class ChatsListScreen extends React.Component {
   state = {
@@ -95,8 +94,10 @@ export default class ChatsListScreen extends React.Component {
                       key={id}
                       conversationName={name}
                       members={members}
-                      onPress={()=> {
-                        const phoneNumber = members.filter(el => el !== this.props.userStore.user.phone_number);
+                      onPress={() => {
+                        const phoneNumber = members.filter(
+                          el => el !== this.props.userStore.user.phone_number
+                        );
                         this.renderItem({ phone_number: phoneNumber[0] });
                       }}
                       content={
@@ -115,7 +116,6 @@ export default class ChatsListScreen extends React.Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

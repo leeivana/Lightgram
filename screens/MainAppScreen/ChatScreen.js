@@ -6,7 +6,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { inject } from 'mobx-react';
 import { getConvo, basicUserQuery } from '../../src/graphql/queries';
 import { onCreateMessage } from '../../src/graphql/subscriptions';
-import { CreateConvoLink } from '../../src/graphql/mutations'; 
+import { CreateConvoLink } from '../../src/graphql/mutations';
 
 @inject('userStore')
 class ChatScreen extends Component {
@@ -32,32 +32,42 @@ class ChatScreen extends Component {
     const newMessageArray = [];
     const { messages } = this.state;
     const listConvos = await API.graphql(graphqlOperation(this.listUsers()));
-
     const allConversations = listConvos.data.listUsers.items;
     allConversations.map(async el => {
-      if(el.conversations.items.length > 0){
+      if (el.conversations.items.length > 0) {
         el.conversations.items.forEach(item => {
-          if(item.conversation.members.includes(this.props.userStore.user.phone_number)){
+          if (
+            item.conversation.members.includes(
+              this.props.userStore.user.phone_number
+            )
+          ) {
             this.setState({
               conversationId: item.conversation.id,
             });
           }
         });
       } else {
-        const conversationData = await API.graphql(graphqlOperation(this.createConvo()));
+        const conversationData = await API.graphql(
+          graphqlOperation(this.createConvo())
+        );
         const convoId = conversationData.data.createConvo.id;
         const contactId = listConvos.data.listUsers.items[0].id;
         this.setState({
           conversationId: convoId,
         });
         console.log(this.props.userStore.user.id);
-        const user1 = await API.graphql(graphqlOperation(this.createConvoLink(this.props.userStore.user.id, convoId))); 
-        const user2 = await API.graphql(graphqlOperation(this.createConvoLink(contactId, convoId))); 
+        const user1 = await API.graphql(
+          graphqlOperation(
+            this.createConvoLink(this.props.userStore.user.id, convoId)
+          )
+        );
+        const user2 = await API.graphql(
+          graphqlOperation(this.createConvoLink(contactId, convoId))
+        );
         // const user2 = await API.graphql(graphqlOperation(this.createConvoLink(convoId)));
         console.log('exists');
       }
     });
-
     try {
       API.graphql(
         graphqlOperation(onCreateMessage, {
@@ -93,7 +103,6 @@ class ChatScreen extends Component {
     } catch (err) {
       console.error(err);
     }
-
     const messageData = await API.graphql(
       graphqlOperation(getConvo, { id: this.state.conversationId })
     );
@@ -134,7 +143,9 @@ class ChatScreen extends Component {
     mutation CreateConvo{
       createConvo(input: {
         name: "${this.props.userStore.contact.given_name}"
-        members: ["${this.props.userStore.user.phone_number}", "${this.props.userStore.contact.phone_number}"]
+        members: ["${this.props.userStore.user.phone_number}", "${
+      this.props.userStore.contact.phone_number
+    }"]
         isEncrypted: false
       }) {
         id
@@ -145,7 +156,7 @@ class ChatScreen extends Component {
     }
     `;
     return CreateConvo;
-  }
+  };
 
   createConvoLink = (userId, convoId) => {
     const createConvoLink = `
@@ -234,5 +245,4 @@ class ChatScreen extends Component {
     );
   }
 }
-
 export default withNavigation(ChatScreen);

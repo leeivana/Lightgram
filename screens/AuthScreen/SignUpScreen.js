@@ -18,7 +18,7 @@ export default class SignUpScreen extends React.Component {
     given_name: '',
     family_name: '',
     password: '',
-    username: '',
+    username: '+1',
     authenticationCode: '',
     showConfirmationForm: false,
   };
@@ -47,9 +47,7 @@ export default class SignUpScreen extends React.Component {
     try {
       await Auth.confirmSignUp(username, authenticationCode);
       console.log('successfully signed up!');
-      alert('User signed up successfully!');
-      // Once confirmed redirect to signIn page
-      //  navigate('SignIn')
+      this.props.navigation.navigate('SignIn');
     } catch (err) {
       console.log('error confirming signing up: ', err);
     }
@@ -84,9 +82,11 @@ export default class SignUpScreen extends React.Component {
                 onChangeText={val => this.onChangeText('password', val)}
               />
               <TextInput
+                keyboardType="phone-pad"
                 style={styles.input}
                 placeholder="Phone Number"
                 autoCapitalize="none"
+                value={this.state.username}
                 onChangeText={val => this.onChangeText('username', val)}
               />
               <Button
